@@ -3,16 +3,30 @@ package Main; /**
  */
 
 import javafx.application.*;
+import javafx.geometry.Insets;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import java.util.*;
 
 public class Main extends Application{
 
+    //ülemine menüü
+    Button timerButton = new Button("Taimer");
+    Button entryButton = new Button("Lisa/muuda sissekandeid");
+    Button statistikaButton = new Button("Statistika");
+
+    //stopperi osa
     Button startEndButton;
     Stopwatch stopwatch = new Stopwatch();
+    Label timeLabel;
+    ChoiceBox<String> projectDropDown = new ChoiceBox<>();
+
+    //projektide osa
+    TextField newProjectTextField = new TextField();
+    Button addProjectButton = new Button("Lisa uus projekt");
+
+
 
 
     public static void main(String[] args){
@@ -23,30 +37,46 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("lihtne taimer");
 
-        Label label = new Label("Aeg: " + stopwatch.getLength());
+       timeLabel = new Label("Aeg: " + stopwatch.getLength());
 
 
 
 
-    startEndButton = new Button("Start");
-        startEndButton.setOnAction(e -> {
-            if (stopwatch.running==false){
-                stopwatch.start();
-                startEndButton.setText("Stopp");
-            }else{
-                stopwatch.end();
-                stopwatch.getLength();
-                label.setText("Aeg: " + stopwatch.length);
-                startEndButton.setText("Start");
-            }
+        startEndButton = new Button("Start");
+            startEndButton.setOnAction(e -> {
+                if (stopwatch.isRunning()==false){
+                    stopwatch.start();
+                    startEndButton.setText("Stopp");
+                }else{
+                    stopwatch.end();
+                    stopwatch.calcLength();
+                    timeLabel.setText("Aeg: " + stopwatch.getLength());
+                    startEndButton.setText("Start");
+                }
 
         });
 
+        //ülemine menüü
+        HBox upperLayout = new HBox(20);
+        upperLayout.setPadding(new Insets(10,10,10,10));
+        upperLayout.getChildren().addAll(timerButton, entryButton, statistikaButton);
 
+        //stopperi osa
+        VBox leftLayout = new VBox(20);
+        leftLayout.setPadding(new Insets(10,10,10,10));
+        leftLayout.getChildren().addAll(projectDropDown, startEndButton, timeLabel);
 
-        VBox layout = new VBox(20);
-        layout.getChildren().addAll(startEndButton, label);
-        Scene scene = new Scene(layout, 300, 250);
+        //projetide osa
+        VBox rightLayout = new VBox(20);
+        rightLayout.setPadding(new Insets(10,10,10,10));
+        rightLayout.getChildren().addAll(newProjectTextField, addProjectButton);
+
+        BorderPane layout = new BorderPane();
+        layout.setTop(upperLayout);
+        layout.setCenter(leftLayout);
+        layout.setRight(rightLayout);
+
+        Scene scene = new Scene(layout, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
 
