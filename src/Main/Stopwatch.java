@@ -6,8 +6,8 @@ package Main;
 public class Stopwatch {
     private static long start = 0;
     private static long end = 0;
-    private static int length;
-    private static int currentLength;
+    private static Time length;
+    private static Time currentLength;
     private static boolean running=false;
 
     public static void start(){
@@ -21,48 +21,23 @@ public class Stopwatch {
     }
 
     public static void calcLength(){
-        length=(int)(end-start)/1000;
+        int lengthInt=(int)(end-start)/1000;
+        length = new Time(0,0,lengthInt);
     }
 
-    public static int getCurrentLength(){
-        currentLength=(int)(System.currentTimeMillis()-start)/1000;
-        return currentLength;
-    }
-
-    public static long getStart() {
-        return start;
-    }
-
-    public static void setStart(long start) {
-        Stopwatch.start = start;
-    }
-
-    public static long getEnd() {
-        return end;
-    }
-
-    public static void setEnd(long end) {
-        Stopwatch.end = end;
-    }
-
-    public static int getLength() {
+    public static Time getLength(){
         return length;
     }
 
-    public static void setLength(int length) {
-        Stopwatch.length = length;
-    }
-
-    public static void setCurrentLength(int currentLength) {
-        Stopwatch.currentLength = currentLength;
+    public static Time getCurrentLength(){
+        int currentLengthInt=(int)(System.currentTimeMillis()-start)/1000;
+        currentLength = new Time(0,0,currentLengthInt);
+        return currentLength;
     }
 
     public static boolean isRunning() {
         return running;
     }
 
-    public static void setRunning(boolean running) {
-        Stopwatch.running = running;
-    }
 }
 
