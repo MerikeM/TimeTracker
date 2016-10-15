@@ -6,14 +6,15 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.*;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.util.Duration;
-
-
 import java.util.ArrayList;
 
 
@@ -23,6 +24,8 @@ public class Main extends Application{
     ArrayList<Project> allProjects = new ArrayList<Project>(); //sisaldab kõiki loodud projekte
     Timeline timeline;
 
+    //TAIMERI VAADE
+
     //ülemise menüü elemendid
     Button timerButton = new Button("Taimer");
     Button entryButton = new Button("Lisa/muuda sissekandeid");
@@ -31,13 +34,19 @@ public class Main extends Application{
     //stopperi osa elemendid
     Button startEndButton;
     Stopwatch stopwatch = new Stopwatch();
-    Label timeLabel;
+    Label timeLabel = new Label("");
     ComboBox<String> projectDropDown = new ComboBox<>();
 
     //projektide osa elemendid
     Label totalTimeLabel = new Label(getTotalTimes(allProjects));
     TextField newProjectTextField = new TextField();
     Button addProjectButton = new Button("Lisa uus projekt");
+
+    //SISSEKANNETE VAADE
+    TableView<Entry> entryTabel = new TableView<Entry>();
+    Button selfAddButton = new Button("Lisa");
+    Button changeButton = new Button("Muuda");
+    Button deleteButton = new Button("Kustuta");
 
 
 
@@ -53,10 +62,13 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("lihtne taimer");
 
+
+
+
+
         //stopperi osa
         projectDropDown.setMinWidth(120);
 
-        timeLabel = new Label("Aeg: " + stopwatch.getLength());
 
         startEndButton = new Button("Start");
             startEndButton.setOnAction(e -> {
@@ -70,6 +82,13 @@ public class Main extends Application{
 
         //projektide osa
         addProjectButton.setOnAction(e -> addNewProject());
+        newProjectTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER))
+                    addNewProject();
+            }
+        });
 
 
         //LAYOUT
@@ -89,14 +108,34 @@ public class Main extends Application{
         rightLayout.setPadding(new Insets(10,10,10,10));
         rightLayout.getChildren().addAll(totalTimeLabel, newProjectTextField, addProjectButton);
 
-        BorderPane layout = new BorderPane();
-        layout.setTop(upperLayout);
-        layout.setCenter(leftLayout);
-        layout.setRight(rightLayout);
+        //sissekannete osa
+        VBox rightLayoutEntries = new VBox();
+        rightLayoutEntries.setPadding(new Insets(10,10,10,10));
+        rightLayoutEntries.getChildren().addAll(selfAddButton, changeButton, deleteButton);
+        StackPane tablePane = new StackPane();
+        tablePane.getChildren().add(entryTabel);
 
-        Scene scene = new Scene(layout, 600, 500);
+        //taimer vaade
+        BorderPane Layout = new BorderPane();
+        Layout.setTop(upperLayout);
+        Layout.setCenter(leftLayout);
+        Layout.setRight(rightLayout);
+
+        Scene scene = new Scene(Layout, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        //sissekannete vaade
+
+        entryButton.setOnAction(e -> {
+            Layout.setCenter(tablePane);
+            Layout.setRight(rightLayoutEntries);
+        });
+
+
+
+
+
 
 
 
@@ -125,7 +164,7 @@ public class Main extends Application{
             }
         }
         System.out.println("Ei leidnud projekti nimega " + name);
-        return new Project("nimetu");
+        throw new IllegalArgumentException("sellist projekti ei ole");
     }
 
     //Lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
@@ -149,9 +188,17 @@ public class Main extends Application{
 
     //Käivitab stopperi
     public void startStopwatch(){
+        try {
+            String currentProjectName = projectDropDown.getValue();
+            Project currentProject = findProjectByName(allProjects, currentProjectName);
+        } catch (IllegalArgumentException e){
+            AlertBox.display("Viga", "Vali mõni projekt");
+            return;
+        }
         stopwatch.start();
         startEndButton.setText("Stopp");
         projectDropDown.setDisable(true);
+        updateTimeLabel();
         timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
                 ae -> updateTimeLabel()));
