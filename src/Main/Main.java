@@ -6,6 +6,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.input.KeyCode;
@@ -16,7 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import java.util.ArrayList;
-
+import java.util.Date;
 
 
 public class Main extends Application{
@@ -44,10 +46,10 @@ public class Main extends Application{
 
     //SISSEKANNETE VAADE
     TableView<Entry> entryTabel = new TableView<Entry>();
+
     Button selfAddButton = new Button("Lisa");
     Button changeButton = new Button("Muuda");
     Button deleteButton = new Button("Kustuta");
-
 
 
 
@@ -91,6 +93,9 @@ public class Main extends Application{
         });
 
 
+
+
+
         //LAYOUT
 
         //ülemine menüü
@@ -125,12 +130,22 @@ public class Main extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //sissekannete vaade
+        //vaadete vahel liikumine
 
         entryButton.setOnAction(e -> {
             Layout.setCenter(tablePane);
             Layout.setRight(rightLayoutEntries);
         });
+
+        timerButton.setOnAction(e -> {
+            Layout.setCenter(leftLayout);
+            Layout.setRight(rightLayout);
+        });
+
+        ObservableList<Project> obsAllProjects = FXCollections.observableList(allProjects);
+
+
+
 
 
 
@@ -217,7 +232,8 @@ public class Main extends Application{
 
         String currentProjectName = projectDropDown.getValue();
         Project currentProject = findProjectByName(allProjects, currentProjectName);
-        Entry currentEntry = new Entry(entryTime, new Date(13,10,2016));
+        Entry currentEntry = new Entry(entryTime, new Date());
+        System.out.println(currentEntry.getDate());
         currentProject.newEntry(currentEntry);
 
         totalTimeLabel.setText(getTotalTimes(allProjects));

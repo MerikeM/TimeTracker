@@ -1,11 +1,18 @@
 package Main;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Merike on 09-Oct-16.
  */
 public class Entry {
+    SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
     private Time time;
     private Date date;
+
+
 
     public Entry(Time t, Date d){
         time = t;
@@ -27,4 +34,5 @@ public class Entry {
     public Date getDate(){
         return date;
     }
+
 }
