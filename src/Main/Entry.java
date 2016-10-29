@@ -1,5 +1,7 @@
 package Main;
 
+
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,28 +13,29 @@ public class Entry {
 
     private Time time;
     private Date date;
+    private String project;
 
 
 
-    public Entry(Time t, Date d){
-        time = t;
-        date = d;
+    public Entry(Time t, Date d, String p){
+        this.time = t;
+        this.date = d;
+        this.project = p;
     }
 
-    public void setTime(Time t){
-        time = t;
-    }
-
-    public void setDate(Date d){
-        date = d;
-    }
-
-    public Time getTime(){
+    public Time getTime() {
         return time;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return date;
     }
 
+    public String getDateString() {
+        return df.format(date);
+    }
+
+    public String getTimeString(){
+        return time.toString();
+    }
 }

@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.*;
@@ -22,7 +23,6 @@ import java.util.Date;
 
 
 public class Main extends Application{
-
     ArrayList<Project> allProjects = new ArrayList<Project>(); //sisaldab kõiki loodud projekte
     Timeline timeline;
 
@@ -34,7 +34,7 @@ public class Main extends Application{
     Button statistikaButton = new Button("Statistika");
 
     //stopperi osa elemendid
-    Button startEndButton;
+    Button startEndButton = new Button("Start");
     Stopwatch stopwatch = new Stopwatch();
     Label timeLabel = new Label("");
     ComboBox<String> projectDropDown = new ComboBox<>();
@@ -45,42 +45,25 @@ public class Main extends Application{
     Button addProjectButton = new Button("Lisa uus projekt");
 
     //SISSEKANNETE VAADE
-    TableView<Entry> entryTabel = new TableView<Entry>();
-
     Button selfAddButton = new Button("Lisa");
     Button changeButton = new Button("Muuda");
     Button deleteButton = new Button("Kustuta");
 
+    //tabel
+    TableView<TableData> entryTable = new TableView<TableData>();
 
+    private final ObservableList<TableData> data = FXCollections.observableArrayList();
 
-    public static void main(String[] args){
-        launch(args);
-    }
 
 
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("lihtne taimer");
-
-
-
-
-
+        //TAIMERI VAADE
         //stopperi osa
         projectDropDown.setMinWidth(120);
-
-
-        startEndButton = new Button("Start");
-            startEndButton.setOnAction(e -> {
-                if (stopwatch.isRunning()==false){
-                    startStopwatch();
-                }else{
-                    stopStopwatch();
-                }
-
-        });
+        startEndButton.setOnAction(e -> startEndButtonIsClicked());
 
         //projektide osa
         addProjectButton.setOnAction(e -> addNewProject());
@@ -92,7 +75,26 @@ public class Main extends Application{
             }
         });
 
+        //PROJEKTIDE VAADE
+        //tabel
 
+        TableColumn projectColumn = new TableColumn("Projekt");
+        projectColumn.setCellValueFactory(
+                new PropertyValueFactory<TableData,String>("project")
+        );
+
+        TableColumn dateColumn = new TableColumn("Kuupäev");
+        dateColumn.setCellValueFactory(
+                new PropertyValueFactory<TableData,String>("date")
+        );
+
+        TableColumn timeColumn = new TableColumn("Aeg");
+        timeColumn.setCellValueFactory(
+                new PropertyValueFactory<TableData,String>("time")
+        );
+
+        entryTable.setItems(data);
+        entryTable.getColumns().addAll(projectColumn, dateColumn, timeColumn);
 
 
 
@@ -118,7 +120,7 @@ public class Main extends Application{
         rightLayoutEntries.setPadding(new Insets(10,10,10,10));
         rightLayoutEntries.getChildren().addAll(selfAddButton, changeButton, deleteButton);
         StackPane tablePane = new StackPane();
-        tablePane.getChildren().add(entryTabel);
+        tablePane.getChildren().addAll(entryTable);
 
         //taimer vaade
         BorderPane Layout = new BorderPane();
@@ -142,19 +144,17 @@ public class Main extends Application{
             Layout.setRight(rightLayout);
         });
 
-        ObservableList<Project> obsAllProjects = FXCollections.observableList(allProjects);
 
 
 
-
-
-
-
-
-
-
-
-
+    }
+    //käivitab või peatab stopperi
+    private void startEndButtonIsClicked() {
+        if (stopwatch.isRunning() == false) {
+            startStopwatch();
+        } else {
+            stopStopwatch();
+        }
     }
 
     // koostab sõne, mis sisaldab kõiki projekte ja nende koguaegu
@@ -170,7 +170,6 @@ public class Main extends Application{
 
     //Sisendiks projekte sisaldav ArrayList ja otsitava projekti nimi.
     //Väljastab otsitava nimega projekti.
-
     public Project findProjectByName(ArrayList<Project> list, String name){
         for (int i = 0; i < list.size(); i++) {
             Project p = list.get(i);
@@ -223,6 +222,7 @@ public class Main extends Application{
 
     //Lõpetab stopperi töö ja lisab selle aja valitud projektile
     public void stopStopwatch(){
+
         stopwatch.end();
         stopwatch.calcLength();
         Time entryTime = stopwatch.getLength();
@@ -230,13 +230,17 @@ public class Main extends Application{
         projectDropDown.setDisable(false);
         timeline.stop();
 
+
         String currentProjectName = projectDropDown.getValue();
         Project currentProject = findProjectByName(allProjects, currentProjectName);
-        Entry currentEntry = new Entry(entryTime, new Date());
-        System.out.println(currentEntry.getDate());
+        Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
+        data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString()));
+
+
 
         totalTimeLabel.setText(getTotalTimes(allProjects));
+
 
     }
 
@@ -246,6 +250,9 @@ public class Main extends Application{
         String currentLengthString = currentLength.toString();
         timeLabel.setText(currentLengthString);
     }
+
+
+
 
 
 
