@@ -23,7 +23,7 @@ import java.util.Date;
 
 
 public class Main extends Application{
-    ArrayList<Project> allProjects = new ArrayList<Project>(); //sisaldab kõiki loodud projekte
+    public static ArrayList<Project> allProjects = new ArrayList<Project>(); //sisaldab kõiki loodud projekte
     Timeline timeline;
 
     //TAIMERI VAADE
@@ -75,7 +75,7 @@ public class Main extends Application{
             }
         });
 
-        //PROJEKTIDE VAADE
+        //SISSEKANNETE VAADE
         //tabel
 
         TableColumn projectColumn = new TableColumn("Projekt");
@@ -93,8 +93,16 @@ public class Main extends Application{
                 new PropertyValueFactory<TableData,String>("time")
         );
 
+        TableColumn idColumn = new TableColumn("ID");
+        idColumn.setCellValueFactory(
+                new PropertyValueFactory<TableData,Double>("id")
+        );
+
         entryTable.setItems(data);
-        entryTable.getColumns().addAll(projectColumn, dateColumn, timeColumn);
+        entryTable.getColumns().addAll(projectColumn, dateColumn, timeColumn, idColumn);
+
+        //lisa/muuda/kustuta
+        selfAddButton.setOnAction(e -> AddEntryManual());
 
 
 
@@ -148,6 +156,8 @@ public class Main extends Application{
 
 
     }
+
+    //TAIMERI VAADE
     //käivitab või peatab stopperi
     private void startEndButtonIsClicked() {
         if (stopwatch.isRunning() == false) {
@@ -235,7 +245,7 @@ public class Main extends Application{
         Project currentProject = findProjectByName(allProjects, currentProjectName);
         Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
-        data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString()));
+        data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString(), currentEntry.getEntryID()));
 
 
 
@@ -249,6 +259,15 @@ public class Main extends Application{
         Time currentLength = stopwatch.getCurrentLength();
         String currentLengthString = currentLength.toString();
         timeLabel.setText(currentLengthString);
+    }
+
+    //SISSEKANNETE VAADE
+    public void AddEntryManual(){
+        System.out.println("button pressed");
+        AddEntryWindow window = new AddEntryWindow();
+        window.display();
+
+
     }
 
 

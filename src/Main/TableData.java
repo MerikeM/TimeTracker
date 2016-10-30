@@ -1,5 +1,7 @@
 package Main;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -9,11 +11,13 @@ public class TableData {
     private SimpleStringProperty project;
     private SimpleStringProperty date;
     private SimpleStringProperty time;
+    private SimpleIntegerProperty id;
 
-    public TableData(String p, String d, String t){
+    public TableData(String p, String d, String t, int id){
         this.project = new SimpleStringProperty(p);
         this.date = new SimpleStringProperty(d);
         this.time = new SimpleStringProperty(t);
+        this.id = new SimpleIntegerProperty(id);
     }
 
     public String getProject() {
@@ -50,5 +54,17 @@ public class TableData {
 
     public void setTime(String time) {
         this.time.set(time);
+    }
+
+    public double getId() {
+        return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 }

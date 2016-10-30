@@ -14,6 +14,8 @@ public class Entry {
     private Time time;
     private Date date;
     private String project;
+    private static int nextID=0;
+    private int entryID;
 
 
 
@@ -21,6 +23,8 @@ public class Entry {
         this.time = t;
         this.date = d;
         this.project = p;
+        this.entryID = nextID;
+        nextID++;
     }
 
     public Time getTime() {
@@ -37,5 +41,9 @@ public class Entry {
 
     public String getTimeString(){
         return time.toString();
+    }
+
+    public int getEntryID() {
+        return entryID;
     }
 }
