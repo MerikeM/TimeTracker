@@ -4,10 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Date;
 
 /**
  * Created by Merike on 30-Oct-16.
@@ -25,9 +22,9 @@ public class AddEntryWindow {
         Label dateLabel = new Label("Kuupäev: ");
 
         ComboBox<String> projectDropdown = new ComboBox<String>();
-        int arrayLength = Main.allProjects.size();
+        int arrayLength = MainOld.allProjects.size();
         for(int i=0; i<arrayLength; i++){
-            Project p = Main.allProjects.get(i);
+            Project p = MainOld.allProjects.get(i);
             String projectName = p.toString();
             projectDropdown.getItems().add(projectName);
         }
