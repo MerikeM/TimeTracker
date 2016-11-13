@@ -65,7 +65,7 @@ public class TimerView {
     public static void startStopwatch(){
         try {
             String currentProjectName = projectDropDown.getValue();
-            Project currentProject = findProjectByName(Main.projectList.getProjectList(), currentProjectName);
+            Project currentProject = Main.projectList.findProjectByName(currentProjectName);
         } catch (IllegalArgumentException e){
             AlertBox.display("Viga", "Vali mõni projekt");
             return;
@@ -91,18 +91,13 @@ public class TimerView {
         projectDropDown.setDisable(false);
         timeline.stop();
 
-
         String currentProjectName = projectDropDown.getValue();
-        Project currentProject = findProjectByName(Main.projectList.getProjectList(), currentProjectName);
+        Project currentProject = Main.projectList.findProjectByName(currentProjectName);
         Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
         EntryView.data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString(), currentEntry.getEntryID()));
 
-
-
-        totalTimeLabel.setText(getTotalTimes(Main.projectList.getProjectList()));
-
-
+        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
     }
 
     //uuendab stopperi näitu
@@ -110,30 +105,6 @@ public class TimerView {
         Time currentLength = stopwatch.getCurrentLength();
         String currentLengthString = currentLength.toString();
         timeLabel.setText(currentLengthString);
-    }
-
-    //Sisendiks projekte sisaldav ArrayList ja otsitava projekti nimi.
-    //Väljastab otsitava nimega projekti.
-    public static Project findProjectByName(ArrayList<Project> list, String name){
-        for (int i = 0; i < list.size(); i++) {
-            Project p = list.get(i);
-            if (p.toString().equals(name)){
-                return p;
-            }
-        }
-        System.out.println("Ei leidnud projekti nimega " + name);
-        throw new IllegalArgumentException("sellist projekti ei ole");
-    }
-
-    // koostab sõne, mis sisaldab kõiki projekte ja nende koguaegu
-    public static String getTotalTimes(ArrayList<Project> list){
-        String result = "";
-        for (int i = 0; i < list.size(); i++) {
-            Project p = list.get(i);
-            String s = p.toString() + ": " + p.getTotalTime() + "\n";
-            result = result + s;
-        }
-        return result;
     }
 
     //Lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
@@ -152,7 +123,7 @@ public class TimerView {
         Project newProject = new Project(projectName);
         projectDropDown.getItems().add(newProject.toString());
         Main.projectList.getProjectList().add(newProject);
-        totalTimeLabel.setText(getTotalTimes(Main.projectList.getProjectList()));
+        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
     }
 
 

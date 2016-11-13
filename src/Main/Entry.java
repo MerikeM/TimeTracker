@@ -1,7 +1,5 @@
 package Main;
 
-
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -41,6 +39,10 @@ public class Entry {
 
     public String getTimeString(){
         return time.toString();
+    }
+
+    public String getProjectString(){
+        return project;
     }
 
     public int getEntryID() {

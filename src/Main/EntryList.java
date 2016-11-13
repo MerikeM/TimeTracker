@@ -30,7 +30,6 @@ public class EntryList {
         Entry currentEntry = entryList.get(i);
         String dateAsString = currentEntry.getDateString();
         return dateAsString;
-
     }
 
 }
