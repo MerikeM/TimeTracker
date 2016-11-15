@@ -1,5 +1,6 @@
 package Main;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -44,8 +45,8 @@ public class AddEntryWindow {
         if (!time.toString().equals(new Time(0,0,0).toString()) && !project.getName().equals(new Project("UserForgotToChooseTheProject").getName())) {
             entry = new Entry(time, date, projectName);
             project.newEntry(entry);
-            EntryView.data.add(new TableData(entry.getProjectString(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
-            TimerView.totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
+            EntryView.data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
+            TimerView.updateTotalTimes();
 
             window.close();
         }
@@ -132,6 +133,10 @@ public class AddEntryWindow {
 
         Button okButton = new Button("OK");
         Button cancelButton = new Button("Tühista");
+        HBox buttonsHBox = new HBox();
+        buttonsHBox.getChildren().addAll(cancelButton, okButton);
+        buttonsHBox.setPadding(new Insets(20, 0, 0, 10));
+        buttonsHBox.setSpacing(10);
         
         GridPane grid = new GridPane();
         grid.add(projectLabel, 0, 0);
@@ -140,8 +145,7 @@ public class AddEntryWindow {
         grid.add(timeField, 1, 1);
         grid.add(dateLabel, 0, 2);
         grid.add(datePicker, 1, 2);
-        grid.add(cancelButton, 0, 4);
-        grid.add(okButton, 2, 4);
+        grid.add(buttonsHBox, 0, 3);
         Scene scene = new Scene(grid);
         window.setScene(scene);
         window.show();

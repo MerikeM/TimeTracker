@@ -38,6 +38,18 @@ public class ProjectList {
         throw new IllegalArgumentException("sellist projekti ei ole");
     }
 
+    public static Entry findEntryById (int id){
+        for (Project project: projectList) {
+            EntryList list = project.entries;
+            for (Entry entry: list.entryList){
+                if (entry.getEntryID()==id){
+                    return entry;
+                }
+            }
+        }
+        throw new IllegalArgumentException("sellise id-ga sissekannet ei ole");
+    }
+
     // koostab sõne, mis sisaldab kõiki projekte ja nende koguaegu
     public static String getTotalTimes(){
         String result = "";

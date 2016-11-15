@@ -97,7 +97,7 @@ public class TimerView {
         currentProject.newEntry(currentEntry);
         EntryView.data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString(), currentEntry.getEntryID()));
 
-        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
+        updateTotalTimes();
     }
 
     //uuendab stopperi näitu
@@ -105,6 +105,11 @@ public class TimerView {
         Time currentLength = stopwatch.getCurrentLength();
         String currentLengthString = currentLength.toString();
         timeLabel.setText(currentLengthString);
+    }
+
+    //uuendab projektidele kulutatud aja näitu
+    public static void updateTotalTimes(){
+        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
     }
 
     //Lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
@@ -123,7 +128,7 @@ public class TimerView {
         Project newProject = new Project(projectName);
         projectDropDown.getItems().add(newProject.toString());
         Main.projectList.getProjectList().add(newProject);
-        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
+        updateTotalTimes();
     }
 
 

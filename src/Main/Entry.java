@@ -11,7 +11,7 @@ public class Entry {
 
     private Time time;
     private Date date;
-    private String project;
+    private String projectName;
     private static int nextID=0;
     private int entryID;
 
@@ -20,7 +20,7 @@ public class Entry {
     public Entry(Time t, Date d, String p){
         this.time = t;
         this.date = d;
-        this.project = p;
+        this.projectName = p;
         this.entryID = nextID;
         nextID++;
     }
@@ -41,11 +41,12 @@ public class Entry {
         return time.toString();
     }
 
-    public String getProjectString(){
-        return project;
+    public String getProjectName(){
+        return projectName;
     }
 
     public int getEntryID() {
         return entryID;
     }
+
 }

@@ -18,7 +18,7 @@ public class EntryView {
     Button changeButton;
     Button deleteButton;
 
-    TableView<TableData> entryTable;
+    static TableView<TableData> entryTable;
     static ObservableList<TableData> data = FXCollections.observableArrayList();
 
     public EntryView(){
@@ -70,5 +70,16 @@ public class EntryView {
     public static void AddEntryManual(){
         AddEntryWindow window = new AddEntryWindow();
         window.display();
+    }
+
+    public static void DeleteEntry(){
+        TableData tableData = entryTable.getSelectionModel().getSelectedItem();
+        int id = tableData.getId();
+        Entry entry = ProjectList.findEntryById(id);
+        String projectName = entry.getProjectName();
+        Project project = ProjectList.findProjectByName(projectName);
+        project.deleteEntry(entry);
+        TimerView.updateTotalTimes();
+        data.remove(tableData);
     }
 }

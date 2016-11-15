@@ -60,6 +60,29 @@ public class Time {
         return newTime;
     }
 
+    //lahutab esimesest ajast teise aja
+    //tulemus ei tohi olla negatiivne, st esimene aeg >= teisega
+    public static Time subtractTimes(Time first, Time second){
+        int newHours, newMin, newSec;
+        if (first.seconds<second.seconds){
+            first.seconds += 60;
+            first.minutes--;
+        }
+        newSec = first.seconds-second.seconds;
+        if (first.minutes<second.minutes){
+            first.minutes += 60;
+            first.hours--;
+        }
+        newMin = first.minutes-second.minutes;
+        newHours = first.hours-second.hours;
+        if (newHours<0){
+            throw new IllegalArgumentException("esimene aeg peab olema suurem kui teine");
+        }
+
+        Time time = new Time(newHours, newMin, newSec);
+        return time;
+    }
+
     public String toString(){
         return(hours + "h " + minutes + "min " + seconds + "sek");
     }

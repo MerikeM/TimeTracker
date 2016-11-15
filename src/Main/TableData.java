@@ -56,7 +56,7 @@ public class TableData {
         this.time.set(time);
     }
 
-    public double getId() {
+    public int getId() {
         return id.get();
     }
 

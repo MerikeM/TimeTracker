@@ -15,9 +15,15 @@ public class Project {
         this.totalTime = new Time (0,0,0);
     }
 
-    public void newEntry(Entry e){
-        entries.add(e);
-        totalTime=Time.addTimes(totalTime,e.getTime());
+    public void newEntry(Entry entry){
+        entries.add(entry);
+        totalTime=Time.addTimes(totalTime,entry.getTime());
+    }
+
+    public void deleteEntry(Entry entry){
+        totalTime=Time.subtractTimes(totalTime, entry.getTime());
+        entries.deleteEntry(entry);
+        TimerView.updateTotalTimes();
     }
 
     public Time getTotalTime() {

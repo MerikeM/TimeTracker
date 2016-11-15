@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class EntryList {
 
-    private ArrayList<Entry> entryList;
+    ArrayList<Entry> entryList;
 
     public EntryList(){
         this.entryList=new ArrayList<Entry>();
@@ -16,6 +16,10 @@ public class EntryList {
 
     public void add(Entry entry){
         entryList.add(entry);
+    }
+
+    public void deleteEntry(Entry entry){
+        entryList.remove(entry);
     }
 
     //väljastab sissekande nr i aja
