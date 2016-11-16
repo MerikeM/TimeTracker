@@ -6,10 +6,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -21,7 +23,7 @@ public class AddEntryWindow {
     static TextField hourField, minField, secField;
     static Stage window;
 
-    public static void addEntry(){
+    public void addEntry(){
         String projectName;
         Project project;
         Date date;
@@ -97,7 +99,7 @@ public class AddEntryWindow {
 
     }
 
-    public static void display(){
+    public void display(){
         window = new Stage();
         window.setHeight(250);
         window.setWidth(400);
@@ -129,6 +131,30 @@ public class AddEntryWindow {
         timeField.getChildren().addAll(hourField, timeSeparator1, minField, timeSeparator2, secField);
 
         datePicker = new DatePicker();
+        String pattern = "dd.MM.yyyy";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+        datePicker.setPromptText(pattern.toLowerCase());
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
         datePicker.setValue(LocalDate.now());
 
         Button okButton = new Button("OK");

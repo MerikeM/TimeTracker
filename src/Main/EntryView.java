@@ -72,6 +72,11 @@ public class EntryView {
         window.display();
     }
 
+    public static void ChangeEntry(){
+        ChangeEntryWindow window = new ChangeEntryWindow();
+        window.display();
+    }
+
     public static void DeleteEntry(){
         TableData tableData = entryTable.getSelectionModel().getSelectedItem();
         int id = tableData.getId();

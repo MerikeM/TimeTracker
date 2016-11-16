@@ -29,6 +29,7 @@ public class MainWindow {
         timerView.startEndButton.setOnAction(event -> TimerView.startEndButtonIsClicked());
         timerView.addProjectButton.setOnAction(event -> TimerView.addNewProject());
         entryView.selfAddButton.setOnAction(event -> EntryView.AddEntryManual());
+        entryView.changeButton.setOnAction(event -> EntryView.ChangeEntry());
         entryView.deleteButton.setOnAction(event -> EntryView.DeleteEntry());
     }
 
