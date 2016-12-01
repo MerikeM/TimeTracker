@@ -15,11 +15,13 @@ public class Project {
         this.totalTime = new Time (0,0,0);
     }
 
+    //lisab uue sissekande ja arvutab uue koguaja
     public void newEntry(Entry entry){
         entries.add(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
     }
 
+    //kustutab sissekande ja arvutab uue koguaja
     public void deleteEntry(Entry entry){
         totalTime=Time.subtractTimes(totalTime, entry.getTime());
         entries.deleteEntry(entry);
@@ -31,10 +33,6 @@ public class Project {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public String toString(){
         return name;
     }
 }

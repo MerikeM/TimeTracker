@@ -24,48 +24,16 @@ public class TableData {
         return project.get();
     }
 
-    public SimpleStringProperty projectProperty() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project.set(project);
-    }
-
     public String getDate() {
         return date.get();
-    }
-
-    public SimpleStringProperty dateProperty() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date.set(date);
     }
 
     public String getTime() {
         return time.get();
     }
 
-    public SimpleStringProperty timeProperty() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time.set(time);
-    }
-
     public int getId() {
         return id.get();
-    }
-
-    public SimpleIntegerProperty idProperty() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id.set(id);
     }
 
     public Time getTimeObject(){

@@ -12,11 +12,12 @@ public class ProjectList {
         projectList = new ArrayList<Project>();
     }
 
+    //tagastab kõigi projektide ajad kujul "projekti nimi: aeg"
     public String getTotalTimesAsString(){
         String result = "";
         for (int i = 0; i < projectList.size(); i++) {
             Project p = projectList.get(i);
-            String s = p.toString() + ": " + p.getTotalTime() + "\n";
+            String s = p.getName() + ": " + p.getTotalTime() + "\n";
             result = result + s;
         }
         return result;
@@ -31,13 +32,14 @@ public class ProjectList {
     public static Project findProjectByName(String name){
         for (int i = 0; i < projectList.size(); i++) {
             Project p = projectList.get(i);
-            if (p.toString().equals(name)) {
+            if (p.getName().equals(name)) {
                 return p;
             }
         }
         throw new IllegalArgumentException("sellist projekti ei ole");
     }
 
+    //tagastab sissekande objekti, mis on vastava id-ga
     public static Entry findEntryById (int id){
         for (Project project: projectList) {
             EntryList list = project.entries;
@@ -50,21 +52,14 @@ public class ProjectList {
         throw new IllegalArgumentException("sellise id-ga sissekannet ei ole");
     }
 
-    // koostab sõne, mis sisaldab kõiki projekte ja nende koguaegu
-    public static String getTotalTimes(){
-        String result = "";
-        for (int i = 0; i < projectList.size(); i++) {
-            Project p = projectList.get(i);
-            String s = p.toString() + ": " + p.getTotalTime() + "\n";
-            result = result + s;
-        }
-        return result;
-    }
-
     //väljastab i-nda projekti
     public static Project getProject(int i){
         Project p = projectList.get(i);
         return p;
+    }
+
+    public void add(Project p){
+        projectList.add(p);
     }
 
 }

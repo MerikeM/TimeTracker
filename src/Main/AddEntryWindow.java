@@ -54,6 +54,7 @@ public class AddEntryWindow {
         }
     }
 
+    //loob aja objekti sisestatud tundide, minutite ja sekundite põhjal
     private static Time findEnteredTime(){
         int hours, minutes, seconds;
         Time time;
@@ -96,9 +97,9 @@ public class AddEntryWindow {
 
         time = new Time(hours, minutes, seconds);
         return time;
-
     }
 
+    //avab sissekannete lisamise akna
     public void display(){
         window = new Stage();
         window.setHeight(250);
@@ -108,14 +109,16 @@ public class AddEntryWindow {
         Label timeLabel = new Label("Aeg: ");
         Label dateLabel = new Label("Kuupäev: ");
 
+        //drop down menüü projekti valimiseks
         projectDropdown = new ComboBox<String>();
         int arrayLength = Main.projectList.getProjectList().size();
         for(int i=0; i<arrayLength; i++){
             Project p = Main.projectList.getProject(i);
-            String projectName = p.toString();
+            String projectName = p.getName();
             projectDropdown.getItems().add(projectName);
         }
 
+        //väljad aja sisestamiseks
         HBox timeField = new HBox();
         hourField = new TextField();
         hourField.setPrefWidth(30);
@@ -130,13 +133,13 @@ public class AddEntryWindow {
         Label timeSeparator2 = new Label(" : ");
         timeField.getChildren().addAll(hourField, timeSeparator1, minField, timeSeparator2, secField);
 
+        //kuupäeva valimine
         datePicker = new DatePicker();
         String pattern = "dd.MM.yyyy";
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
         datePicker.setPromptText(pattern.toLowerCase());
         datePicker.setConverter(new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
-
             @Override
             public String toString(LocalDate date) {
                 if (date != null) {
@@ -145,7 +148,6 @@ public class AddEntryWindow {
                     return "";
                 }
             }
-
             @Override
             public LocalDate fromString(String string) {
                 if (string != null && !string.isEmpty()) {
@@ -157,13 +159,15 @@ public class AddEntryWindow {
         });
         datePicker.setValue(LocalDate.now());
 
+        //OK ja Tühista nupud
         Button okButton = new Button("OK");
         Button cancelButton = new Button("Tühista");
         HBox buttonsHBox = new HBox();
         buttonsHBox.getChildren().addAll(cancelButton, okButton);
         buttonsHBox.setPadding(new Insets(20, 0, 0, 10));
         buttonsHBox.setSpacing(10);
-        
+
+        //elementide paigutus
         GridPane grid = new GridPane();
         grid.add(projectLabel, 0, 0);
         grid.add(projectDropdown, 1, 0);

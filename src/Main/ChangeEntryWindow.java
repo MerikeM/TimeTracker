@@ -7,10 +7,11 @@ import java.time.LocalDate;
  */
 public class ChangeEntryWindow extends AddEntryWindow {
 
+    //loob sissekannete muutmise akna
     public void display() {
         TableData tableData = EntryView.entryTable.getSelectionModel().getSelectedItem();
 
-        //Leia praeguse sissekande väärtused
+        //leia praeguse sissekande andmed
         String currentProjectName = tableData.getProject();
         Time currentTime = tableData.getTimeObject();
         int currentHours = currentTime.getHours();
@@ -18,7 +19,7 @@ public class ChangeEntryWindow extends AddEntryWindow {
         int currentSeconds = currentTime.getSeconds();
         LocalDate currentDate = LocalDate.of(tableData.getYear(), tableData.getMonth(), tableData.getDay());
 
-        //Muuda väljade vaikimisi väärtused praeguse sissekande väärtusteks
+        //muuda väljade vaikimisi väärtused praeguse sissekande väärtusteks
         super.display();
         hourField.setText(Integer.toString(currentHours));
         minField.setText(Integer.toString(currentMinutes));

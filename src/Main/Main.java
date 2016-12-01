@@ -12,6 +12,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Database db = new Database();
+        db.readData();
+        db.closeConnection();
         new MainWindow();
     }
 }

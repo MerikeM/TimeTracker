@@ -15,8 +15,6 @@ public class Entry {
     private static int nextID=0;
     private int entryID;
 
-
-
     public Entry(Time t, Date d, String p){
         this.time = t;
         this.date = d;
@@ -27,10 +25,6 @@ public class Entry {
 
     public Time getTime() {
         return time;
-    }
-
-    public Date getDate() {
-        return date;
     }
 
     public String getDateString() {

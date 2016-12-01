@@ -18,18 +18,6 @@ public class Time {
         minutes+=(s%3600)/60;
         seconds=s%60;
     }
-
-    public void setTime(int h, int m, int s){
-        hours = h;
-
-        hours += m/60;
-        minutes = m%60;
-
-        hours+=s/3600;
-        minutes+=(s%3600)/60;
-        seconds=s%60;
-    }
-
     public int getHours(){
         return hours;
     }
@@ -42,6 +30,7 @@ public class Time {
         return seconds;
     }
 
+    //liidab kaks aega kokku
     public static Time addTimes(Time first, Time second){
         int newHours=first.hours + second.hours;
         int newMin=first.minutes + second.minutes;
@@ -83,6 +72,7 @@ public class Time {
         return time;
     }
 
+    //tagastab aja kujul ..h ..min ..sek
     public String toString(){
         return(hours + "h " + minutes + "min " + seconds + "sek");
     }

@@ -3,15 +3,16 @@ package Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -38,9 +39,17 @@ public class TimerView {
 
         totalTimeLabel = new Label(Main.projectList.getTotalTimesAsString());
         newProjectTextField = new TextField();
+        newProjectTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER))
+                    addNewProject();
+            }
+        });
+
         addProjectButton = new Button("Lisa uus projekt");
     }
 
+    //avab taimeri vaate
     public void open (){
         VBox timerVBox = new VBox(20);
         timerVBox.setPadding(new Insets(10,10,10,10));
@@ -53,6 +62,7 @@ public class TimerView {
         MainWindow.pane.setRight(projectsVBox);
     }
 
+    //käivitab või peatab stopperi
     public static void startEndButtonIsClicked() {
         if (stopwatch.isRunning() == false) {
             startStopwatch();
@@ -61,7 +71,7 @@ public class TimerView {
         }
     }
 
-    //Käivitab stopperi
+    //käivitab stopperi
     public static void startStopwatch(){
         try {
             String currentProjectName = projectDropDown.getValue();
@@ -81,7 +91,7 @@ public class TimerView {
         timeline.play();
     }
 
-    //Lõpetab stopperi töö ja lisab selle aja valitud projektile
+    //lõpetab stopperi töö ja lisab selle aja valitud projektile
     public static void stopStopwatch(){
 
         stopwatch.end();
@@ -112,7 +122,7 @@ public class TimerView {
         totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
     }
 
-    //Lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
+    //lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
     public static void addNewProject(){
         String projectName=newProjectTextField.getText();
         newProjectTextField.clear();
@@ -126,10 +136,8 @@ public class TimerView {
         }
 
         Project newProject = new Project(projectName);
-        projectDropDown.getItems().add(newProject.toString());
-        Main.projectList.getProjectList().add(newProject);
+        projectDropDown.getItems().add(newProject.getName());
+        Main.projectList.add(newProject);
         updateTotalTimes();
     }
-
-
 }

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,12 +27,15 @@ public class EntryView {
         changeButton = new Button("Muuda");
         deleteButton = new Button("Kustuta");
 
-        entryTable = new TableView<TableData>();
-
         makeTable();
     }
 
+    //loob sissekannete tabeli
     private void makeTable(){
+        entryTable = new TableView<TableData>();
+        entryTable.setPlaceholder(new Label("Ühtegi sissekannet pole"));
+        entryTable.setMaxWidth(300);
+
         TableColumn projectColumn = new TableColumn("Projekt");
         projectColumn.setCellValueFactory(
                 new PropertyValueFactory<TableData,String>("project")
@@ -47,18 +51,14 @@ public class EntryView {
                 new PropertyValueFactory<TableData,String>("time")
         );
 
-        TableColumn idColumn = new TableColumn("ID");
-        idColumn.setCellValueFactory(
-                new PropertyValueFactory<TableData,Double>("id")
-        );
-
         entryTable.setItems(data);
-        entryTable.getColumns().addAll(projectColumn, dateColumn, timeColumn, idColumn);
+        entryTable.getColumns().addAll(projectColumn, timeColumn, dateColumn);
     }
 
+    //avab sissekannete vaate
     public void open(){
         VBox buttonsVBox = new VBox();
-        buttonsVBox.setPadding(new Insets(10,10,10,10));
+        buttonsVBox.setPadding(new Insets(10,50,10,10));
         buttonsVBox.getChildren().addAll(selfAddButton, changeButton, deleteButton);
         MainWindow.pane.setRight(buttonsVBox);
 
@@ -67,24 +67,35 @@ public class EntryView {
         MainWindow.pane.setCenter(tablePane);
     }
 
+    //avab akna sissekannete käsitsi lisamiseks
     public static void AddEntryManual(){
         AddEntryWindow window = new AddEntryWindow();
         window.display();
     }
 
+    //avab akna sissekannete muutmiseks
     public static void ChangeEntry(){
-        ChangeEntryWindow window = new ChangeEntryWindow();
-        window.display();
+        if (entryTable.getSelectionModel().isEmpty()){
+            AlertBox.display("Viga", "Vali mõni sissekanne");
+        } else {
+            ChangeEntryWindow window = new ChangeEntryWindow();
+            window.display();
+        }
     }
 
+    //kustutab valitud sissekande
     public static void DeleteEntry(){
-        TableData tableData = entryTable.getSelectionModel().getSelectedItem();
-        int id = tableData.getId();
-        Entry entry = ProjectList.findEntryById(id);
-        String projectName = entry.getProjectName();
-        Project project = ProjectList.findProjectByName(projectName);
-        project.deleteEntry(entry);
-        TimerView.updateTotalTimes();
-        data.remove(tableData);
+        if (entryTable.getSelectionModel().isEmpty()){
+            AlertBox.display("Viga", "Vali mõni sissekanne");
+        } else {
+            TableData tableData = entryTable.getSelectionModel().getSelectedItem();
+            int id = tableData.getId();
+            Entry entry = ProjectList.findEntryById(id);
+            String projectName = entry.getProjectName();
+            Project project = ProjectList.findProjectByName(projectName);
+            project.deleteEntry(entry);
+            TimerView.updateTotalTimes();
+            data.remove(tableData);
+        }
     }
 }

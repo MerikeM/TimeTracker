@@ -25,6 +25,7 @@ public class MainWindow {
         setClickEvent();
     }
 
+    //nuppude funktsioonid
     private void setClickEvent() {
         timerView.startEndButton.setOnAction(event -> TimerView.startEndButtonIsClicked());
         timerView.addProjectButton.setOnAction(event -> TimerView.addNewProject());
@@ -33,6 +34,7 @@ public class MainWindow {
         entryView.deleteButton.setOnAction(event -> EntryView.DeleteEntry());
     }
 
+    //loob ülemise menüüriba
     private void setUpperMenu() {
         Button timerButton = new Button("Taimer");
         Button entryButton = new Button("Lisa/muuda sissekandeid");

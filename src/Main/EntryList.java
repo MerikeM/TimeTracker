@@ -14,10 +14,12 @@ public class EntryList {
         this.entryList=new ArrayList<Entry>();
     }
 
+    //lisab uue sissekande
     public void add(Entry entry){
         entryList.add(entry);
     }
 
+    //kustutab sissekande
     public void deleteEntry(Entry entry){
         entryList.remove(entry);
     }
@@ -30,6 +32,7 @@ public class EntryList {
         return timeAsString;
     }
 
+    //väljastab sissekande nr i kuupäeva
     public String getDate(int i){
         Entry currentEntry = entryList.get(i);
         String dateAsString = currentEntry.getDateString();
