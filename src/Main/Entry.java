@@ -23,12 +23,26 @@ public class Entry {
         nextID++;
     }
 
+    public Entry(Time t, Date d, String p, int id){
+        this.time = t;
+        this.date = d;
+        this.projectName = p;
+        this.entryID = id;
+        if (id>=nextID){
+            nextID = id+1;
+        }
+    }
+
     public Time getTime() {
         return time;
     }
 
     public String getDateString() {
         return df.format(date);
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public String getTimeString(){

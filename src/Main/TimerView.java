@@ -36,14 +36,17 @@ public class TimerView {
         timeLabel = new Label("");
         projectDropDown = new ComboBox<>();
         projectDropDown.setMinWidth(120);
+        for (Project project:Main.projectList.getProjectList()
+             ) {
+            String name = project.getName();
+            addToDropDown(name);
+        }
 
         totalTimeLabel = new Label(Main.projectList.getTotalTimesAsString());
         newProjectTextField = new TextField();
-        newProjectTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
+        newProjectTextField.setOnKeyPressed(event ->  {
                 if (event.getCode().equals(KeyCode.ENTER))
                     addNewProject();
-            }
         });
 
         addProjectButton = new Button("Lisa uus projekt");
@@ -136,8 +139,12 @@ public class TimerView {
         }
 
         Project newProject = new Project(projectName);
-        projectDropDown.getItems().add(newProject.getName());
         Main.projectList.add(newProject);
+        addToDropDown(projectName);
         updateTotalTimes();
+    }
+
+    public static void addToDropDown(String name){
+        projectDropDown.getItems().add(name);
     }
 }

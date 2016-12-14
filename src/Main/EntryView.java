@@ -74,7 +74,7 @@ public class EntryView {
     }
 
     //avab akna sissekannete muutmiseks
-    public static void ChangeEntry(){
+    public static void changeEntry(){
         if (entryTable.getSelectionModel().isEmpty()){
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {
@@ -84,7 +84,7 @@ public class EntryView {
     }
 
     //kustutab valitud sissekande
-    public static void DeleteEntry(){
+    public static void deleteEntry(){
         if (entryTable.getSelectionModel().isEmpty()){
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {

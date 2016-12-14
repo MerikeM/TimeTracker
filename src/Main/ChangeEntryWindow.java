@@ -31,7 +31,9 @@ public class ChangeEntryWindow extends AddEntryWindow {
         //lisa uus sissekanne ja kustuta vana
         public void addEntry(){
             super.addEntry();
-            EntryView.DeleteEntry();
+            TableData tableData = EntryView.entryTable.getSelectionModel().getSelectedItem();
+            EntryView.deleteEntry();
+
     }
 
 }

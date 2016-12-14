@@ -26,7 +26,7 @@ public class AddEntryWindow {
     public void addEntry(){
         String projectName;
         Project project;
-        Date date;
+        Date date = new Date();
         Time time;
         Entry entry;
 
@@ -38,13 +38,20 @@ public class AddEntryWindow {
             project = new Project("UserForgotToChooseTheProject");
         }
 
-        LocalDate localDate = datePicker.getValue();
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        date = Date.from(instant);
+        if (datePicker.getValue() == null){
+            AlertBox.display("Viga", "Vali kuupäev");
+        } else {
+            LocalDate localDate = datePicker.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            date = Date.from(instant);
+        }
 
         time = findEnteredTime();
+        if (time.toString().equals(new Time(0,0,0).toString())){
+            AlertBox.display("Viga", "Sisesta aeg");
+        }
 
-        if (!time.toString().equals(new Time(0,0,0).toString()) && !project.getName().equals(new Project("UserForgotToChooseTheProject").getName())) {
+        if (datePicker.getValue()!=null && !time.toString().equals(new Time(0,0,0).toString()) && !project.getName().equals(new Project("UserForgotToChooseTheProject").getName())) {
             entry = new Entry(time, date, projectName);
             project.newEntry(entry);
             EntryView.data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));

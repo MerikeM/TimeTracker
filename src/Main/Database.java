@@ -1,8 +1,7 @@
 package Main;
 
-import org.sqlite.SQLiteException;
-
 import java.sql.*;
+import java.sql.Date;
 
 /**
  * Created by Merike on 02-Dec-16.
@@ -67,15 +66,57 @@ public class Database {
 
                 Date date = new Date (year, month, day);
                 Time time = new Time(hours, minutes, seconds);
-                Entry entry = new Entry(time, date, projectName);
-                project.newEntry(entry);
+                Entry entry = new Entry(time, date, projectName, id);
+                project.newEntryWithoutDb(entry);
                 EntryView.data.add(new TableData(projectName, entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
             }
 
         }
         catch (SQLException e){
             e.printStackTrace();
-            System.exit(0);
+        }
+    }
+
+    public void newEntry(Entry entry){
+        int id = entry.getEntryID();
+        String projectName = entry.getProjectName();
+        java.util.Date date = entry.getDate();
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDate();
+        Time time = entry.getTime();
+        int hours = time.getHours();
+        int minutes = time.getMinutes();
+        int seconds = time.getSeconds();
+
+        String sql = "INSERT INTO Entries (id, projectName, day, month, year, hours, minutes, seconds) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, projectName);
+            preparedStatement.setInt(3, day);
+            preparedStatement.setInt(4, month);
+            preparedStatement.setInt(5, year);
+            preparedStatement.setInt(6, hours);
+            preparedStatement.setInt(7, minutes);
+            preparedStatement.setInt(8, seconds);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }
+        catch (SQLException e){
+            System.out.println("sissekande lisamine ebaõnnestus");
+        }
+    }
+
+    public void deleteEntry (int id){
+       String sql = "DELETE FROM Entries WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e){
+            System.out.println("sissekande eemaldamine ebaõnnestus");
         }
     }
 

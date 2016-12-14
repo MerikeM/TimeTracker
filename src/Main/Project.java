@@ -15,11 +15,18 @@ public class Project {
         this.totalTime = new Time (0,0,0);
     }
 
-    //lisab uue sissekande ja arvutab uue koguaja
+    //lisab uue sissekande, lisab selle andmebaasi ja arvutab uue koguaja
     public void newEntry(Entry entry){
         entries.add(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
     }
+
+    //lisab uue sissekande seda andmebaasi lisamata ja arvutab uue koguaja
+    public void newEntryWithoutDb(Entry entry){
+        entries.addWithoutDb(entry);
+        totalTime=Time.addTimes(totalTime,entry.getTime());
+    }
+
 
     //kustutab sissekande ja arvutab uue koguaja
     public void deleteEntry(Entry entry){

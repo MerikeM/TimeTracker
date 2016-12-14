@@ -14,14 +14,26 @@ public class EntryList {
         this.entryList=new ArrayList<Entry>();
     }
 
-    //lisab uue sissekande
+    //lisab uue sissekande ja lisab selle andmebaasi
     public void add(Entry entry){
+        entryList.add(entry);
+        Database db = new Database();
+        db.newEntry(entry);
+        db.closeConnection();
+    }
+
+    //lisab uue sissekande seda andmebaasi lisamata
+    public void addWithoutDb(Entry entry){
         entryList.add(entry);
     }
 
     //kustutab sissekande
     public void deleteEntry(Entry entry){
         entryList.remove(entry);
+        int id = entry.getEntryID();
+        Database db = new Database();
+        db.deleteEntry(id);
+        db.closeConnection();
     }
 
     //väljastab sissekande nr i aja
