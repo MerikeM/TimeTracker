@@ -7,31 +7,38 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import static Main.Main.entryView;
+import static Main.Main.statisticsView;
+import static Main.Main.timerView;
+
+
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class MainWindow {
 
-    static BorderPane pane = new BorderPane();
+    BorderPane pane = new BorderPane();
     private Scene scene = new Scene(pane, 600, 500);
 
-    TimerView timerView = new TimerView();
-    EntryView entryView = new EntryView();
+
 
     public MainWindow(){
         startStage();
         setUpperMenu();
-        timerView.open();
         setClickEvent();
+    }
+
+    public void display(){
+        timerView.open();
     }
 
     //nuppude funktsioonid
     private void setClickEvent() {
-        timerView.startEndButton.setOnAction(event -> TimerView.startEndButtonIsClicked());
-        timerView.addProjectButton.setOnAction(event -> TimerView.addNewProject());
-        entryView.selfAddButton.setOnAction(event -> EntryView.AddEntryManual());
-        entryView.changeButton.setOnAction(event -> EntryView.changeEntry());
-        entryView.deleteButton.setOnAction(event -> EntryView.deleteEntry());
+        timerView.startEndButton.setOnAction(event -> timerView.startEndButtonIsClicked());
+        timerView.addProjectButton.setOnAction(event -> timerView.addNewProject());
+        entryView.selfAddButton.setOnAction(event -> entryView.AddEntryManual());
+        entryView.changeButton.setOnAction(event -> entryView.changeEntry());
+        entryView.deleteButton.setOnAction(event -> entryView.deleteEntry());
     }
 
     //loob ülemise menüüriba
@@ -46,6 +53,7 @@ public class MainWindow {
 
         timerButton.setOnAction(event -> timerView.open());
         entryButton.setOnAction(event -> entryView.open());
+        statisticsButton.setOnAction(event -> statisticsView.open());
 
         pane.setTop(upperMenu);
     }

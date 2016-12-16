@@ -14,14 +14,19 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import static Main.Main.entryView;
+import static Main.Main.projectList;
+import static Main.Main.timerView;
+
+
 /**
  * Created by Merike on 30-Oct-16.
  */
 public class AddEntryWindow {
-    static ComboBox<String> projectDropdown;
-    static DatePicker datePicker;
-    static TextField hourField, minField, secField;
-    static Stage window;
+    ComboBox<String> projectDropdown;
+    DatePicker datePicker;
+    TextField hourField, minField, secField;
+    Stage window;
 
     public void addEntry(){
         String projectName;
@@ -32,14 +37,16 @@ public class AddEntryWindow {
 
         projectName = projectDropdown.getValue();
         try {
-            project = ProjectList.findProjectByName(projectName);
+            project = projectList.findProjectByName(projectName);
         } catch (IllegalArgumentException e){
-            AlertBox.display("Viga", "Vali mõni projekt");
+            AlertBox alertBox = new AlertBox();
+            alertBox.display("Viga", "Vali mõni projekt");
             project = new Project("UserForgotToChooseTheProject");
         }
 
         if (datePicker.getValue() == null){
-            AlertBox.display("Viga", "Vali kuupäev");
+            AlertBox alertBox = new AlertBox();
+            alertBox.display("Viga", "Vali kuupäev");
         } else {
             LocalDate localDate = datePicker.getValue();
             Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
@@ -48,21 +55,20 @@ public class AddEntryWindow {
 
         time = findEnteredTime();
         if (time.toString().equals(new Time(0,0,0).toString())){
-            AlertBox.display("Viga", "Sisesta aeg");
+            AlertBox alertBox = new AlertBox();
+            alertBox.display("Viga", "Sisesta aeg");
         }
 
         if (datePicker.getValue()!=null && !time.toString().equals(new Time(0,0,0).toString()) && !project.getName().equals(new Project("UserForgotToChooseTheProject").getName())) {
             entry = new Entry(time, date, projectName);
             project.newEntry(entry);
-            EntryView.data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
-            TimerView.updateTotalTimes();
 
             window.close();
         }
     }
 
     //loob aja objekti sisestatud tundide, minutite ja sekundite põhjal
-    private static Time findEnteredTime(){
+    private Time findEnteredTime(){
         int hours, minutes, seconds;
         Time time;
 
@@ -72,7 +78,8 @@ public class AddEntryWindow {
             try {
                 hours = Integer.parseInt(hourField.getText().trim());
             } catch (NumberFormatException e) {
-                AlertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
+                AlertBox alertBox = new AlertBox();
+                alertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
                 time = new Time(0, 0, 0);
                 return time;
             }
@@ -84,7 +91,8 @@ public class AddEntryWindow {
             try {
                 minutes = Integer.parseInt(minField.getText().trim());
             } catch (NumberFormatException e) {
-                AlertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
+                AlertBox alertBox = new AlertBox();
+                alertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
                 time = new Time(0, 0, 0);
                 return time;
             }
@@ -96,7 +104,8 @@ public class AddEntryWindow {
             try {
                 seconds = Integer.parseInt(secField.getText().trim());
             } catch (NumberFormatException e) {
-                AlertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
+                AlertBox alertBox = new AlertBox();
+                alertBox.display("Viga", "Viga aja sisestamisel. Lubatud ainult numbrid");
                 time = new Time(0, 0, 0);
                 return time;
             }
@@ -118,9 +127,9 @@ public class AddEntryWindow {
 
         //drop down menüü projekti valimiseks
         projectDropdown = new ComboBox<String>();
-        int arrayLength = Main.projectList.getProjectList().size();
+        int arrayLength = projectList.getProjectList().size();
         for(int i=0; i<arrayLength; i++){
-            Project p = Main.projectList.getProject(i);
+            Project p = projectList.getProject(i);
             String projectName = p.getName();
             projectDropdown.getItems().add(projectName);
         }

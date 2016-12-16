@@ -1,5 +1,6 @@
 package Main;
-import java.util.ArrayList;
+
+import static Main.Main.timerView;
 
 /**
  * Created by Merike on 09-Oct-16.
@@ -19,12 +20,14 @@ public class Project {
     public void newEntry(Entry entry){
         entries.add(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
+        timerView.updateTotalTimes();
     }
 
     //lisab uue sissekande seda andmebaasi lisamata ja arvutab uue koguaja
     public void newEntryWithoutDb(Entry entry){
         entries.addWithoutDb(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
+        timerView.updateTotalTimes();
     }
 
 
@@ -32,7 +35,7 @@ public class Project {
     public void deleteEntry(Entry entry){
         totalTime=Time.subtractTimes(totalTime, entry.getTime());
         entries.deleteEntry(entry);
-        TimerView.updateTotalTimes();
+        timerView.updateTotalTimes();
     }
 
     public Time getTotalTime() {

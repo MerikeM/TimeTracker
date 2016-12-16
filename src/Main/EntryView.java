@@ -11,6 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import static Main.Main.mainWindow;
+import static Main.Main.projectList;
+import static Main.Main.timerView;
+
+
 /**
  * Created by Merike on 12-Nov-16.
  */
@@ -19,8 +24,8 @@ public class EntryView {
     Button changeButton;
     Button deleteButton;
 
-    static TableView<TableData> entryTable;
-    static ObservableList<TableData> data = FXCollections.observableArrayList();
+    TableView<TableData> entryTable;
+    ObservableList<TableData> data = FXCollections.observableArrayList();
 
     public EntryView(){
         selfAddButton = new Button("Lisa");
@@ -60,21 +65,21 @@ public class EntryView {
         VBox buttonsVBox = new VBox();
         buttonsVBox.setPadding(new Insets(10,50,10,10));
         buttonsVBox.getChildren().addAll(selfAddButton, changeButton, deleteButton);
-        MainWindow.pane.setRight(buttonsVBox);
+        mainWindow.pane.setRight(buttonsVBox);
 
         StackPane tablePane = new StackPane();
         tablePane.getChildren().addAll(entryTable);
-        MainWindow.pane.setCenter(tablePane);
+        mainWindow.pane.setCenter(tablePane);
     }
 
     //avab akna sissekannete käsitsi lisamiseks
-    public static void AddEntryManual(){
+    public void AddEntryManual(){
         AddEntryWindow window = new AddEntryWindow();
         window.display();
     }
 
     //avab akna sissekannete muutmiseks
-    public static void changeEntry(){
+    public void changeEntry(){
         if (entryTable.getSelectionModel().isEmpty()){
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {
@@ -84,17 +89,16 @@ public class EntryView {
     }
 
     //kustutab valitud sissekande
-    public static void deleteEntry(){
+    public void deleteEntry(){
         if (entryTable.getSelectionModel().isEmpty()){
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {
             TableData tableData = entryTable.getSelectionModel().getSelectedItem();
             int id = tableData.getId();
-            Entry entry = ProjectList.findEntryById(id);
+            Entry entry = projectList.findEntryById(id);
             String projectName = entry.getProjectName();
-            Project project = ProjectList.findProjectByName(projectName);
+            Project project = projectList.findProjectByName(projectName);
             project.deleteEntry(entry);
-            TimerView.updateTotalTimes();
             data.remove(tableData);
         }
     }

@@ -2,6 +2,8 @@ package Main;
 
 import java.time.LocalDate;
 
+import static Main.Main.entryView;
+
 /**
  * Created by Merike on 16-Nov-16.
  */
@@ -9,7 +11,7 @@ public class ChangeEntryWindow extends AddEntryWindow {
 
     //loob sissekannete muutmise akna
     public void display() {
-        TableData tableData = EntryView.entryTable.getSelectionModel().getSelectedItem();
+        TableData tableData = entryView.entryTable.getSelectionModel().getSelectedItem();
 
         //leia praeguse sissekande andmed
         String currentProjectName = tableData.getProject();
@@ -31,8 +33,8 @@ public class ChangeEntryWindow extends AddEntryWindow {
         //lisa uus sissekanne ja kustuta vana
         public void addEntry(){
             super.addEntry();
-            TableData tableData = EntryView.entryTable.getSelectionModel().getSelectedItem();
-            EntryView.deleteEntry();
+            TableData tableData = entryView.entryTable.getSelectionModel().getSelectedItem();
+            entryView.deleteEntry();
 
     }
 

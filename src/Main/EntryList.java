@@ -1,7 +1,9 @@
 package Main;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+import static Main.Main.entryView;
+import static Main.Main.timerView;
 
 /**
  * Created by Merike on 29-Oct-16.
@@ -20,11 +22,13 @@ public class EntryList {
         Database db = new Database();
         db.newEntry(entry);
         db.closeConnection();
+        entryView.data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
     }
 
     //lisab uue sissekande seda andmebaasi lisamata
     public void addWithoutDb(Entry entry){
         entryList.add(entry);
+        entryView.data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
     }
 
     //kustutab sissekande

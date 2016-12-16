@@ -3,6 +3,9 @@ package Main;
 import java.sql.*;
 import java.sql.Date;
 
+import static Main.Main.entryView;
+import static Main.Main.projectList;
+
 /**
  * Created by Merike on 02-Dec-16.
  */
@@ -57,18 +60,17 @@ public class Database {
                 //vajadusel loo uus projekt
                 Project project;
                 try {
-                project = ProjectList.findProjectByName(projectName);
+                project = projectList.findProjectByName(projectName);
                 }
                 catch (IllegalArgumentException e){
                     project = new Project(projectName);
-                    Main.projectList.getProjectList().add(project);
+                    projectList.add(project);
                 }
 
                 Date date = new Date (year, month, day);
                 Time time = new Time(hours, minutes, seconds);
                 Entry entry = new Entry(time, date, projectName, id);
                 project.newEntryWithoutDb(entry);
-                EntryView.data.add(new TableData(projectName, entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
             }
 
         }

@@ -9,12 +9,20 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static ProjectList projectList = new ProjectList();
+    static MainWindow mainWindow;
+    static TimerView timerView;
+    static EntryView entryView;
+    static StatisticsView statisticsView;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        timerView = new TimerView();
+        entryView = new EntryView();
+        statisticsView = new StatisticsView();
+        mainWindow = new MainWindow();
         Database db = new Database();
         db.readData();
         db.closeConnection();
-        new MainWindow();
+        mainWindow.display();
     }
 }

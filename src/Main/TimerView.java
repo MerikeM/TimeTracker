@@ -3,32 +3,33 @@ package Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import java.util.Date;
+
+import static Main.Main.entryView;
+import static Main.Main.mainWindow;
 
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class TimerView {
-    static Timeline timeline;
+    Timeline timeline;
 
-    static Button startEndButton;
-    static Stopwatch stopwatch;
-    static Label timeLabel;
-    static ComboBox<String> projectDropDown;
+    Button startEndButton;
+    Stopwatch stopwatch;
+    Label timeLabel;
+    ComboBox<String> projectDropDown;
 
-    static Label totalTimeLabel;
-    static TextField newProjectTextField;
-    static Button addProjectButton;
+    Label totalTimeLabel;
+    TextField newProjectTextField;
+    Button addProjectButton;
 
     public TimerView(){
         startEndButton = new Button("Start");
@@ -57,16 +58,16 @@ public class TimerView {
         VBox timerVBox = new VBox(20);
         timerVBox.setPadding(new Insets(10,10,10,10));
         timerVBox.getChildren().addAll(projectDropDown, startEndButton, timeLabel);
-        MainWindow.pane.setCenter(timerVBox);
+        mainWindow.pane.setCenter(timerVBox);
 
         VBox projectsVBox = new VBox(20);
         projectsVBox.setPadding(new Insets(10,10,10,10));
         projectsVBox.getChildren().addAll(totalTimeLabel, newProjectTextField, addProjectButton);
-        MainWindow.pane.setRight(projectsVBox);
+        mainWindow.pane.setRight(projectsVBox);
     }
 
     //käivitab või peatab stopperi
-    public static void startEndButtonIsClicked() {
+    public void startEndButtonIsClicked() {
         if (stopwatch.isRunning() == false) {
             startStopwatch();
         } else {
@@ -75,12 +76,13 @@ public class TimerView {
     }
 
     //käivitab stopperi
-    public static void startStopwatch(){
+    public void startStopwatch(){
         try {
             String currentProjectName = projectDropDown.getValue();
             Project currentProject = Main.projectList.findProjectByName(currentProjectName);
         } catch (IllegalArgumentException e){
-            AlertBox.display("Viga", "Vali mõni projekt");
+            AlertBox alertBox = new AlertBox();
+            alertBox.display("Viga", "Vali mõni projekt");
             return;
         }
         stopwatch.start();
@@ -95,7 +97,7 @@ public class TimerView {
     }
 
     //lõpetab stopperi töö ja lisab selle aja valitud projektile
-    public static void stopStopwatch(){
+    public void stopStopwatch(){
 
         stopwatch.end();
         stopwatch.calcLength();
@@ -108,43 +110,42 @@ public class TimerView {
         Project currentProject = Main.projectList.findProjectByName(currentProjectName);
         Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
-        EntryView.data.add(new TableData(currentProjectName, currentEntry.getDateString(), currentEntry.getTimeString(), currentEntry.getEntryID()));
-
-        updateTotalTimes();
     }
 
     //uuendab stopperi näitu
-    public static void updateTimeLabel(){
+    public void updateTimeLabel(){
         Time currentLength = stopwatch.getCurrentLength();
         String currentLengthString = currentLength.toString();
         timeLabel.setText(currentLengthString);
     }
 
     //uuendab projektidele kulutatud aja näitu
-    public static void updateTotalTimes(){
+    public void updateTotalTimes(){
         totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
+        System.out.println("updateTotalTimes");
     }
 
     //lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
-    public static void addNewProject(){
+    public void addNewProject(){
         String projectName=newProjectTextField.getText();
         newProjectTextField.clear();
 
         for (int i = 0; i < Main.projectList.getProjectList().size(); i++) {
             Project p = Main.projectList.getProjectList().get(i);
             if (p.getName().equals(projectName)){
-                AlertBox.display("Viga", "Sellise nimega projekt on olemas");
+                AlertBox alertBox = new AlertBox();
+                alertBox.display("Viga", "Sellise nimega projekt on olemas");
                 return;
             }
         }
 
         Project newProject = new Project(projectName);
         Main.projectList.add(newProject);
-        addToDropDown(projectName);
         updateTotalTimes();
     }
 
-    public static void addToDropDown(String name){
+    public void addToDropDown(String name){
         projectDropDown.getItems().add(name);
+        System.out.println("addToDropDown");
     }
 }

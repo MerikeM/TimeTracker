@@ -4,42 +4,42 @@ package Main;
  * Created by Merike on 03-Oct-16.
  */
 public class Stopwatch {
-    private static long start = 0;
-    private static long end = 0;
-    private static Time length;
-    private static Time currentLength;
-    private static boolean running=false;
+    private long start = 0;
+    private long end = 0;
+    private Time length;
+    private Time currentLength;
+    private boolean running=false;
 
     //käivitab stopper
-    public static void start(){
+    public void start(){
         start=System.currentTimeMillis();
         running=true;
     }
 
     //peatab stopperi
-    public static void end(){
+    public void end(){
         end=System.currentTimeMillis();
         running=false;
     }
 
     //arvutab alguse ja lõpuaegade vahe
-    public static void calcLength(){
+    public void calcLength(){
         int lengthInt=(int)(end-start)/1000;
         length = new Time(0,0,lengthInt);
     }
 
-    public static Time getLength(){
+    public Time getLength(){
         return length;
     }
 
     //väljastab stopperi näidu ilma stopperit peatamata
-    public static Time getCurrentLength(){
+    public Time getCurrentLength(){
         int currentLengthInt=(int)(System.currentTimeMillis()-start)/1000;
         currentLength = new Time(0,0,currentLengthInt);
         return currentLength;
     }
 
-    public static boolean isRunning() {
+    public boolean isRunning() {
         return running;
     }
 
