@@ -8,7 +8,7 @@ import static Main.Main.timerView;
  * Created by Merike on 12-Nov-16.
  */
 public class ProjectList {
-    private ArrayList<Project> projectList; //sisaldab kõiki loodud projekte
+    ArrayList<Project> projectList; //sisaldab kõiki loodud projekte
 
     public ProjectList(){
         projectList = new ArrayList<Project>();

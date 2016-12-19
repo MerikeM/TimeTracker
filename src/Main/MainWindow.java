@@ -25,20 +25,10 @@ public class MainWindow {
     public MainWindow(){
         startStage();
         setUpperMenu();
-        setClickEvent();
     }
 
     public void display(){
         timerView.open();
-    }
-
-    //nuppude funktsioonid
-    private void setClickEvent() {
-        timerView.startEndButton.setOnAction(event -> timerView.startEndButtonIsClicked());
-        timerView.addProjectButton.setOnAction(event -> timerView.addNewProject());
-        entryView.selfAddButton.setOnAction(event -> entryView.AddEntryManual());
-        entryView.changeButton.setOnAction(event -> entryView.changeEntry());
-        entryView.deleteButton.setOnAction(event -> entryView.deleteEntry());
     }
 
     //loob ülemise menüüriba

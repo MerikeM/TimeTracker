@@ -70,6 +70,10 @@ public class EntryView {
         StackPane tablePane = new StackPane();
         tablePane.getChildren().addAll(entryTable);
         mainWindow.pane.setCenter(tablePane);
+
+        selfAddButton.setOnAction(event -> AddEntryManual());
+        changeButton.setOnAction(event -> changeEntry());
+        deleteButton.setOnAction(event -> deleteEntry());
     }
 
     //avab akna sissekannete käsitsi lisamiseks

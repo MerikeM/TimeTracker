@@ -64,6 +64,9 @@ public class TimerView {
         projectsVBox.setPadding(new Insets(10,10,10,10));
         projectsVBox.getChildren().addAll(totalTimeLabel, newProjectTextField, addProjectButton);
         mainWindow.pane.setRight(projectsVBox);
+
+        startEndButton.setOnAction(event -> startEndButtonIsClicked());
+        addProjectButton.setOnAction(event -> addNewProject());
     }
 
     //käivitab või peatab stopperi
@@ -122,7 +125,6 @@ public class TimerView {
     //uuendab projektidele kulutatud aja näitu
     public void updateTotalTimes(){
         totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
-        System.out.println("updateTotalTimes");
     }
 
     //lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
@@ -146,6 +148,5 @@ public class TimerView {
 
     public void addToDropDown(String name){
         projectDropDown.getItems().add(name);
-        System.out.println("addToDropDown");
     }
 }
