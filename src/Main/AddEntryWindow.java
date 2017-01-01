@@ -152,7 +152,6 @@ public class AddEntryWindow {
         //kuupäeva valimine
         datePicker = new DatePicker();
         String pattern = "dd.MM.yyyy";
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
         datePicker.setPromptText(pattern.toLowerCase());
         datePicker.setConverter(new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
