@@ -32,9 +32,9 @@ public class ChangeEntryWindow extends AddEntryWindow {
 
         //lisa uus sissekanne ja kustuta vana
         public void addEntry(){
-            super.addEntry();
-            TableData tableData = entryView.entryTable.getSelectionModel().getSelectedItem();
             entryView.deleteEntry();
+            super.addEntry();
+
 
     }
 

@@ -18,9 +18,15 @@ public class Project {
 
     //lisab uue sissekande, lisab selle andmebaasi ja arvutab uue koguaja
     public void newEntry(Entry entry){
+        Time oldTotal = totalTime;
         entries.add(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
         timerView.updateTotalTimes();
+        if ((int)totalTime.getTimeInHours()/10>(int)oldTotal.getTimeInHours()/10){
+            int border = ((int)totalTime.getTimeInHours()/10)*10;
+            String message = "Palju õnne! Projekt " + name + " ületas " + border + " tunni piiri!";
+            AlertBox.display("Eesmärk täidetud", message);
+        }
     }
 
     //lisab uue sissekande seda andmebaasi lisamata ja arvutab uue koguaja
