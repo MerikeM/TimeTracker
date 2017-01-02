@@ -10,7 +10,7 @@ import static Main.Main.entryView;
 public class ChangeEntryWindow extends AddEntryWindow {
 
     //loob sissekannete muutmise akna
-    public void display() {
+    public void setWindow() {
         TableData tableData = entryView.entryTable.getSelectionModel().getSelectedItem();
 
         //leia praeguse sissekande andmed
@@ -22,7 +22,7 @@ public class ChangeEntryWindow extends AddEntryWindow {
         LocalDate currentDate = LocalDate.of(tableData.getYear(), tableData.getMonth(), tableData.getDay());
 
         //muuda väljade vaikimisi väärtused praeguse sissekande väärtusteks
-        super.display();
+        super.setWindow();
         hourField.setText(Integer.toString(currentHours));
         minField.setText(Integer.toString(currentMinutes));
         secField.setText(Integer.toString(currentSeconds));

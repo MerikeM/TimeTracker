@@ -37,44 +37,42 @@ public class TableData {
 
     public Time getTimeObject(){
         String time = getTime();
-        int hPlace = 0;
-        int mPlace = 0;
-        int sPlace = 0;
+        int hmPlace = 0;
+        int msPlace = 0;
+        int count = 0;
         int hours, min, sec;
 
-        //leia tähtede h, m ja s asukohad
+        //leia koolonite põhjal tundide, minutite, sekundite vahekohad
         for (int i = 0; i < time.length(); i++) {
-            if (time.charAt(i) == 'h'){
-                hPlace = i;
+            if (time.charAt(i) == ':' && count == 0){
+                hmPlace = i;
+                count++;
             }
-            if (time.charAt(i) == 'm'){
-                mPlace = i;
-            }
-            if (time.charAt(i) == 's'){
-                sPlace = i;
+            if (time.charAt(i) == ':' && count ==1){
+                msPlace = i;
             }
         }
 
         //eralda tähtede auskohtade põhjal tunnid, minutid, sekundid ja muuda need int-ideks
-        hours = Integer.parseInt(time.substring(0,hPlace));
-        min = Integer.parseInt(time.substring(hPlace + 2, mPlace));
-        sec = Integer.parseInt(time.substring(mPlace + 4, sPlace));
+        hours = Integer.parseInt(time.substring(0,hmPlace));
+        min = Integer.parseInt(time.substring(hmPlace + 1, msPlace));
+        sec = Integer.parseInt(time.substring(msPlace + 1));
 
         return new Time (hours, min, sec);
     }
 
     public int getDay (){
         String date = getDate();
-        return Integer.parseInt(date.substring(0,2));
+        return Integer.parseInt(date.substring(8));
     }
 
     public int getMonth (){
         String date = getDate();
-        return Integer.parseInt((date.substring(3,5)));
+        return Integer.parseInt((date.substring(5,7)));
     }
 
     public int getYear () {
         String date = getDate();
-        return Integer.parseInt((date.substring(6)));
+        return Integer.parseInt((date.substring(0,4)));
     }
 }

@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Merike on 09-Oct-16.
  */
 public class Entry {
-    SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+    SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 
     private Time time;
     private Date date;

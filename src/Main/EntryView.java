@@ -79,7 +79,8 @@ public class EntryView {
     //avab akna sissekannete käsitsi lisamiseks
     public void AddEntryManual(){
         AddEntryWindow window = new AddEntryWindow();
-        window.display();
+        window.setWindow();
+        window.blockParentAndShow();
     }
 
     //avab akna sissekannete muutmiseks
@@ -88,7 +89,8 @@ public class EntryView {
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {
             ChangeEntryWindow window = new ChangeEntryWindow();
-            window.display();
+            window.setWindow();
+            window.blockParentAndShow();
         }
     }
 

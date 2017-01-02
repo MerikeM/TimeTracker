@@ -16,6 +16,10 @@ public class Time {
 
         hours+=s/3600;
         minutes+=(s%3600)/60;
+        if (minutes >= 60){
+            hours += minutes/60;
+            minutes = minutes%60;
+        }
         seconds=s%60;
     }
     public int getHours(){
@@ -34,16 +38,7 @@ public class Time {
     public static Time addTimes(Time first, Time second){
         int newHours=first.hours + second.hours;
         int newMin=first.minutes + second.minutes;
-        if (newMin>=60){
-            newHours+=newMin/60;
-            newMin%=60;
-        }
         int newSec=first.seconds + second.seconds;
-        if (newSec >=3600){
-            newHours+=newSec/3600;
-            newMin+=(newSec%3600)/60;
-            newSec%=60;
-        }
 
         Time newTime = new Time(newHours, newMin, newSec);
         return newTime;
@@ -85,7 +80,26 @@ public class Time {
 
     //tagastab aja kujul ..h ..min ..sek
     public String toString(){
-        return(hours + "h " + minutes + "min " + seconds + "sek");
+        String hoursString;
+        String minutesString;
+        String secondsString;
+        if (hours<10){
+            hoursString = "0" + hours;
+        } else {
+            hoursString = Integer.toString(hours);
+        }
+        if (minutes < 10) {
+            minutesString = "0" + minutes;
+        } else {
+            minutesString = Integer.toString(minutes);
+        }
+        if (seconds < 10){
+            secondsString = "0" + seconds;
+        } else {
+            secondsString = Integer.toString(seconds);
+        }
+
+        return(hoursString + ":" + minutesString + ":" + secondsString);
     }
 
 

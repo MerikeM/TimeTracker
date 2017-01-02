@@ -2,6 +2,8 @@ package Main;
 
 import java.sql.*;
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static Main.Main.entryView;
 import static Main.Main.projectList;
@@ -66,7 +68,8 @@ public class Database {
                     projectList.add(project);
                 }
 
-                Date date = new Date (year, month, day);
+                Calendar calendar = new GregorianCalendar(year, month, day);
+                java.util.Date date = calendar.getTime();
                 Time time = new Time(hours, minutes, seconds);
                 Entry entry = new Entry(time, date, projectName, id);
                 project.newEntryWithoutDb(entry);
@@ -82,9 +85,11 @@ public class Database {
         int id = entry.getEntryID();
         String projectName = entry.getProjectName();
         java.util.Date date = entry.getDate();
-        int year = date.getYear();
-        int month = date.getMonth();
-        int day = date.getDate();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
         Time time = entry.getTime();
         int hours = time.getHours();
         int minutes = time.getMinutes();

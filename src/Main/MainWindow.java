@@ -17,6 +17,7 @@ import static Main.Main.timerView;
  */
 public class MainWindow {
 
+    Stage window;
     BorderPane pane = new BorderPane();
     private Scene scene = new Scene(pane, 600, 500);
 
@@ -49,7 +50,7 @@ public class MainWindow {
     }
 
     private void startStage(){
-        Stage window = new Stage();
+        window = new Stage();
         window.setScene(scene);
         window.show();
     }

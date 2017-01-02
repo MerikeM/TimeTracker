@@ -199,6 +199,7 @@ public class StatisticsViewProjects {
             Label projectLabel = new Label("");
             Label timeLabel = new Label ("");
             VBox projectInfo = new VBox();
+            projectInfo.setMinWidth(100);
             projectInfo.getChildren().addAll(projectLabel, timeLabel);
             projectInfo.setPadding(new Insets(50,10,10,10));
             statisticsArea.setLeft(projectInfo);
@@ -208,6 +209,10 @@ public class StatisticsViewProjects {
                     projectLabel.setText(data.getName());
                     Time time = new Time(0,0, (int)data.getPieValue());
                     timeLabel.setText("Aeg: " + time.toString());
+                });
+                data.getNode().setOnMouseExited(event -> {
+                    projectLabel.setText("");
+                    timeLabel.setText("");
                 });
             }
             statisticsArea.setCenter(chart);
