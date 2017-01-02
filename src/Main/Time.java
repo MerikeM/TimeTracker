@@ -54,6 +54,12 @@ public class Time {
         return timeInSeconds;
     }
 
+    public double getTimeInHours(){
+        double seconds = (double) getTimeInSeconds();
+        double hours = seconds / 3600;
+        return hours;
+    }
+
     //lahutab esimesest ajast teise aja
     //tulemus ei tohi olla negatiivne, st esimene aeg >= teisega
     public static Time subtractTimes(Time first, Time second){

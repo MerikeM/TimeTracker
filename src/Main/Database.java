@@ -24,7 +24,6 @@ public class Database {
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        System.out.println("Andmebaas avatud");
     }
 
     public void createTable() {
@@ -128,6 +127,5 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Ühendus suletud");
     }
 }

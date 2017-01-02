@@ -26,8 +26,10 @@ public class StatisticsView {
         mainWindow.pane.setRight(statisticsMenu);
         StatisticsViewProjects statisticsViewProjects = new StatisticsViewProjects();
         StatisticsViewProgress statisticsViewProgress = new StatisticsViewProgress();
+        StatisticsViewGoals statisticsViewGoals = new StatisticsViewGoals();
         projectsButton.setOnAction(event -> statisticsViewProjects.open());
         progressButton.setOnAction(event -> statisticsViewProgress.open());
+        goalsButton.setOnAction(event -> statisticsViewGoals.open());
         statisticsViewProjects.open();
 
     }
