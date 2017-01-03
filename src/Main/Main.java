@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static ProjectList projectList = new ProjectList();
-    static MainWindow mainWindow;
+    MainWindow mainWindow;
     static TimerView timerView;
     static EntryView entryView;
     static StatisticsView statisticsView;
@@ -23,6 +23,6 @@ public class Main extends Application {
         Database db = new Database();
         db.readData();
         db.closeConnection();
-        mainWindow.display();
+        mainWindow.open();
     }
 }

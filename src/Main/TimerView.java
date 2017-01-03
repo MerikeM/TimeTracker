@@ -9,17 +9,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import java.util.Date;
-
-import static Main.Main.entryView;
-import static Main.Main.mainWindow;
 
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class TimerView {
+    BorderPane timerArea = new BorderPane();
+
     Timeline timeline;
 
     Button startEndButton;
@@ -54,19 +55,21 @@ public class TimerView {
     }
 
     //avab taimeri vaate
-    public void open (){
+    public Pane open (){
         VBox timerVBox = new VBox(20);
         timerVBox.setPadding(new Insets(10,10,10,10));
         timerVBox.getChildren().addAll(projectDropDown, startEndButton, timeLabel);
-        mainWindow.pane.setCenter(timerVBox);
+        timerArea.setCenter(timerVBox);
 
         VBox projectsVBox = new VBox(20);
         projectsVBox.setPadding(new Insets(10,10,10,10));
         projectsVBox.getChildren().addAll(totalTimeLabel, newProjectTextField, addProjectButton);
-        mainWindow.pane.setRight(projectsVBox);
+        timerArea.setRight(projectsVBox);
 
         startEndButton.setOnAction(event -> startEndButtonIsClicked());
         addProjectButton.setOnAction(event -> addNewProject());
+
+        return timerArea;
     }
 
     //käivitab või peatab stopperi

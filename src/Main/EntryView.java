@@ -8,18 +8,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import static Main.Main.mainWindow;
 import static Main.Main.projectList;
-import static Main.Main.timerView;
 
 
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class EntryView {
+    BorderPane entryArea = new BorderPane();
+
     Button selfAddButton;
     Button changeButton;
     Button deleteButton;
@@ -61,19 +63,21 @@ public class EntryView {
     }
 
     //avab sissekannete vaate
-    public void open(){
+    public Pane open(){
         VBox buttonsVBox = new VBox();
         buttonsVBox.setPadding(new Insets(10,50,10,10));
         buttonsVBox.getChildren().addAll(selfAddButton, changeButton, deleteButton);
-        mainWindow.pane.setRight(buttonsVBox);
+        entryArea.setRight(buttonsVBox);
 
         StackPane tablePane = new StackPane();
         tablePane.getChildren().addAll(entryTable);
-        mainWindow.pane.setCenter(tablePane);
+        entryArea.setCenter(tablePane);
 
         selfAddButton.setOnAction(event -> AddEntryManual());
         changeButton.setOnAction(event -> changeEntry());
         deleteButton.setOnAction(event -> deleteEntry());
+
+        return entryArea;
     }
 
     //avab akna sissekannete käsitsi lisamiseks

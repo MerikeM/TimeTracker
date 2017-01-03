@@ -28,8 +28,8 @@ public class MainWindow {
         setUpperMenu();
     }
 
-    public void display(){
-        timerView.open();
+    public void open(){
+        pane.setCenter(timerView.open());
     }
 
     //loob ülemise menüüriba
@@ -42,9 +42,9 @@ public class MainWindow {
         upperMenu.setPadding(new Insets(10,10,10,10));
         upperMenu.getChildren().addAll(timerButton, entryButton, statisticsButton);
 
-        timerButton.setOnAction(event -> timerView.open());
-        entryButton.setOnAction(event -> entryView.open());
-        statisticsButton.setOnAction(event -> statisticsView.open());
+        timerButton.setOnAction(event -> pane.setCenter(timerView.open()));
+        entryButton.setOnAction(event -> pane.setCenter(entryView.open()));
+        statisticsButton.setOnAction(event -> pane.setCenter(statisticsView.open()));
 
         pane.setTop(upperMenu);
     }

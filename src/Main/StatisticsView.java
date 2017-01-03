@@ -2,15 +2,16 @@ package Main;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
-import static Main.Main.mainWindow;
-
 
 /**
  * Created by Merike on 14-Dec-16.
  */
 public class StatisticsView {
+    BorderPane statisticsArea = new BorderPane();
+
     Button projectsButton, progressButton, goalsButton;
 
     public StatisticsView(){
@@ -19,18 +20,20 @@ public class StatisticsView {
         goalsButton = new Button ("Eesmärgid");
     }
 
-    public void open(){
+    public Pane open(){
         VBox statisticsMenu = new VBox(20);
         statisticsMenu.setPadding(new Insets(10,10,10,10));
         statisticsMenu.getChildren().addAll(projectsButton, progressButton, goalsButton);
-        mainWindow.pane.setRight(statisticsMenu);
+        statisticsArea.setRight(statisticsMenu);
         StatisticsViewProjects statisticsViewProjects = new StatisticsViewProjects();
         StatisticsViewProgress statisticsViewProgress = new StatisticsViewProgress();
         StatisticsViewGoals statisticsViewGoals = new StatisticsViewGoals();
-        projectsButton.setOnAction(event -> statisticsViewProjects.open());
-        progressButton.setOnAction(event -> statisticsViewProgress.open());
-        goalsButton.setOnAction(event -> statisticsViewGoals.open());
-        statisticsViewProjects.open();
+        projectsButton.setOnAction(event -> statisticsArea.setCenter(statisticsViewProjects.open()));
+        progressButton.setOnAction(event -> statisticsArea.setCenter(statisticsViewProgress.open()));
+        goalsButton.setOnAction(event -> statisticsArea.setCenter(statisticsViewGoals.open()));
+        statisticsArea.setCenter(statisticsViewProjects.open());
+
+        return statisticsArea;
 
     }
 

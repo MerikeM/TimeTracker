@@ -15,8 +15,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import static Main.Main.*;
-
+import static Main.Main.projectList;
 
 /**
  * Created by Merike on 30-Oct-16.

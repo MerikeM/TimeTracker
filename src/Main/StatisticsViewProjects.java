@@ -2,17 +2,15 @@ package Main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
 import java.time.DayOfWeek;
@@ -22,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 
-import static Main.Main.mainWindow;
 import static Main.Main.projectList;
 
 /**
@@ -56,7 +53,7 @@ public class StatisticsViewProjects {
 
     }
 
-    public void open(){
+    public Pane open(){
 
         convertDateFormat(startPicker);
         convertDateFormat(endPicker);
@@ -78,10 +75,11 @@ public class StatisticsViewProjects {
 
         statisticsArea = new BorderPane();
         statisticsArea.setTop(startEndChooser);
-        mainWindow.pane.setCenter(statisticsArea);
 
         setDateButtons();
         submitDateButton.setOnAction(event -> calcStat());
+
+        return statisticsArea;
     }
 
     //ajaperioodi valimise nuppude funktsioonid

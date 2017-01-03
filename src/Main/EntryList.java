@@ -3,7 +3,6 @@ package Main;
 import java.util.ArrayList;
 
 import static Main.Main.entryView;
-import static Main.Main.timerView;
 
 /**
  * Created by Merike on 29-Oct-16.

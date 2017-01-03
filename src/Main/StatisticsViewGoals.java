@@ -4,8 +4,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
-import static Main.Main.mainWindow;
 import static Main.Main.projectList;
 
 /**
@@ -13,6 +13,7 @@ import static Main.Main.projectList;
  */
 public class StatisticsViewGoals {
     BorderPane goalsArea;
+
     ProgressBar tenBar, hundredBar, thousandBar, tenThousandBar;
     Label tenLabel, hundredLabel, thousandLabel, tenThousandLabel;
     HBox projectBox;
@@ -28,16 +29,17 @@ public class StatisticsViewGoals {
 
     }
 
-    public void open(){
+    public Pane open(){
         for (Project p : projectList.projectList){
             projectChooser.getItems().addAll(p.getName());
         }
 
         projectBox.getChildren().addAll(projectChooser, okButton);
         goalsArea.setTop(projectBox);
-        mainWindow.pane.setCenter(goalsArea);
 
         okButton.setOnAction(event -> calcStat());
+
+        return goalsArea;
 
     }
 

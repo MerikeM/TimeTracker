@@ -1,11 +1,9 @@
 package Main;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static Main.Main.entryView;
 import static Main.Main.projectList;
 
 /**

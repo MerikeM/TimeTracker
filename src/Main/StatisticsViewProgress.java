@@ -11,7 +11,6 @@ import javafx.scene.layout.Pane;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static Main.Main.mainWindow;
 import static Main.Main.projectList;
 
 /**
@@ -25,10 +24,11 @@ public class StatisticsViewProgress {
         progressArea = new Pane();
     }
 
-    public void open(){
-        mainWindow.pane.setCenter(progressArea);
+    public Pane open(){
         calcStat();
         drawChart();
+
+        return progressArea;
     }
 
     public void calcStat(){
