@@ -93,6 +93,8 @@ public class EntryView {
         AddEntryWindow window = new AddEntryWindow(projectList);
         window.setWindow();
         window.blockParentAndShow();
+        data.clear();
+        readData();
     }
 
     //avab akna sissekannete muutmiseks
@@ -104,6 +106,8 @@ public class EntryView {
             window.setWindow();
             window.blockParentAndShow();
         }
+        data.clear();
+        readData();
     }
 
     //kustutab valitud sissekande
@@ -119,5 +123,7 @@ public class EntryView {
             project.deleteEntry(entry);
             data.remove(tableData);
         }
+        data.clear();
+        readData();
     }
 }
