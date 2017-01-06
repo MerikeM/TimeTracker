@@ -25,10 +25,10 @@ public class TimerView {
 
     Timeline timeline;
 
-    Button startEndButton;
-    Stopwatch stopwatch;
-    Label timeLabel;
-    ComboBox<String> projectDropDown;
+    Button startEndButton = new Button("Start");
+    Stopwatch stopwatch = new Stopwatch();
+    Label timeLabel = new Label("");
+    ComboBox<String> projectDropDown = new ComboBox<>();
 
     Label totalTimeLabel;
     TextField newProjectTextField;
@@ -37,10 +37,6 @@ public class TimerView {
     public TimerView(ProjectList pl){
         projectList = pl;
 
-        startEndButton = new Button("Start");
-        stopwatch = new Stopwatch();
-        timeLabel = new Label("");
-        projectDropDown = new ComboBox<>();
         projectDropDown.setMinWidth(120);
         for (Project project:projectList.getProjectList()
              ) {
@@ -58,7 +54,7 @@ public class TimerView {
         addProjectButton = new Button("Lisa uus projekt");
     }
 
-    //avab täääaimeri vaate
+    //tagastab Pane taimeri vaatega
     public Pane open (){
         VBox timerVBox = new VBox(20);
         timerVBox.setPadding(new Insets(10,10,10,10));
@@ -89,7 +85,6 @@ public class TimerView {
     public void startStopwatch(){
         try {
             String currentProjectName = projectDropDown.getValue();
-            Project currentProject = projectList.findProjectByName(currentProjectName);
         } catch (IllegalArgumentException e){
             AlertBox alertBox = new AlertBox();
             alertBox.display("Viga", "Vali mõni projekt");
@@ -108,7 +103,6 @@ public class TimerView {
 
     //lõpetab stopperi töö ja lisab selle aja valitud projektile
     public void stopStopwatch(){
-
         stopwatch.end();
         stopwatch.calcLength();
         Time entryTime = stopwatch.getLength();
@@ -120,6 +114,8 @@ public class TimerView {
         Project currentProject = projectList.findProjectByName(currentProjectName);
         Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
+
+        updateTotalTimes();
     }
 
     //uuendab stopperi näitu
@@ -151,8 +147,10 @@ public class TimerView {
         Project newProject = new Project(projectName);
         projectList.add(newProject);
         updateTotalTimes();
+        addToDropDown(projectName);
     }
 
+    //lisab projektide valiku rippmenüüse uue projekti nime
     public void addToDropDown(String name){
         projectDropDown.getItems().add(name);
     }

@@ -6,31 +6,26 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-
 /**
  * Created by Merike on 02-Jan-17.
  */
 public class StatisticsViewGoals {
     ProjectList projectList;
 
-    BorderPane goalsArea;
+    BorderPane goalsArea = new BorderPane();
 
     ProgressBar tenBar, hundredBar, thousandBar, tenThousandBar;
     Label tenLabel, hundredLabel, thousandLabel, tenThousandLabel;
-    HBox projectBox;
-    ChoiceBox<String> projectChooser;
-    Button okButton;
+    HBox projectBox = new HBox();
+    ChoiceBox<String> projectChooser = new ChoiceBox<>();
+    Button okButton = new Button("OK");
     GridPane progressBars;
 
     public StatisticsViewGoals(ProjectList pl) {
         projectList = pl;
-        goalsArea = new BorderPane();
-        projectChooser = new ChoiceBox<>();
-        okButton = new Button("OK");
-        projectBox = new HBox();
-
     }
 
+    //tagastab Pane eesmärkide statistikaga
     public Pane open(){
         for (Project p : projectList.projectList){
             projectChooser.getItems().addAll(p.getName());
@@ -42,7 +37,6 @@ public class StatisticsViewGoals {
         okButton.setOnAction(event -> calcStat());
 
         return goalsArea;
-
     }
 
     public void calcStat(){
@@ -52,7 +46,7 @@ public class StatisticsViewGoals {
         Time totalTime = project.getTotalTime();
         double hours = totalTime.getTimeInHours();
 
-        //10
+        //progressBar järgmise 10h eesmärgi jaoks
         tenLabel = new Label();
         tenBar = new ProgressBar();
         int xTen = (int)hours/10;
@@ -66,7 +60,7 @@ public class StatisticsViewGoals {
         progressBars.add(tenLabel, 0, 0);
         progressBars.add(tenBar, 1, 0);
 
-        //100
+        //progressBar järgmise 100h eesmärgi jaoks
         hundredLabel = new Label();
         hundredBar = new ProgressBar();
         int xHundred = (int)hours/100;
@@ -80,7 +74,7 @@ public class StatisticsViewGoals {
         progressBars.add(hundredLabel, 0, 1);
         progressBars.add(hundredBar, 1, 1);
 
-        //1000
+        //progressBar järgmise 1 000h eesmärgi jaoks
         thousandLabel = new Label();
         thousandBar = new ProgressBar();
         int xThousand = (int)hours/1000;
@@ -94,7 +88,7 @@ public class StatisticsViewGoals {
         progressBars.add(thousandLabel, 0, 2);
         progressBars.add(thousandBar, 1, 2);
 
-        //10000
+        //progressBar järgmise 10 000h eesmärgi jaoks
         tenThousandLabel = new Label();
         tenThousandBar = new ProgressBar();
         int xTenThousand = (int)hours/10000;
@@ -110,5 +104,4 @@ public class StatisticsViewGoals {
 
         goalsArea.setCenter(progressBars);
     }
-
 }

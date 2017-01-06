@@ -9,11 +9,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     ProjectList projectList = new ProjectList();
-    MainWindow mainWindow;
+    MainWindow mainWindow = new MainWindow(projectList);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        mainWindow = new MainWindow(projectList);
         Database db = new Database(projectList);
         db.readData();
         db.closeConnection();

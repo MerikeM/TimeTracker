@@ -8,13 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
 
 /**
  * Created by Merike on 30-Oct-16.
@@ -38,8 +36,6 @@ public class AddEntryWindow {
         Date date = new Date();
         Time time;
         Entry entry;
-
-
 
         projectName = projectDropdown.getValue();
         try {
@@ -200,7 +196,6 @@ public class AddEntryWindow {
         grid.add(buttonsHBox, 0, 3);
         Scene scene = new Scene(grid);
 
-
         okButton.setOnAction(event -> addEntry());
         cancelButton.setOnAction(event -> window.close());
 
@@ -210,14 +205,5 @@ public class AddEntryWindow {
     public void blockParentAndShow(){
         window.initModality(Modality.APPLICATION_MODAL);
         window.showAndWait();
-
-
     }
-
-
-
-
-
-
-
 }

@@ -12,14 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
-
 
 /**
  * Created by Merike on 18-Dec-16.
@@ -53,11 +51,10 @@ public class StatisticsViewProjects {
         lastWeek = new Button("Eelmine nädal");
         lastMonth = new Button("Eelmine kuu");
         lastYear = new Button("Eelmine aasta");
-
     }
 
+    //tagastab Pane projektide statistikaga
     public Pane open(){
-
         convertDateFormat(startPicker);
         convertDateFormat(endPicker);
 
@@ -161,13 +158,16 @@ public class StatisticsViewProjects {
         });
     }
 
-    //näitab statistikat valitud perioodiks
+    //näitab statistika valitud perioodi kohta ja koostab sellest diagrammi
     public void calcStat() {
         LocalDate startLocalDate = startPicker.getValue();
         LocalDate endLocalDate = endPicker.getValue();
         Date startDate = Date.from(startLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+        if (startDate.after(endDate)){
+            AlertBox.display("Viga", "Lõpukuupäev peab olema hilisem kui alguskuupäev");
+        }
 
         HashMap<String, Time> results = new HashMap();
 
@@ -186,19 +186,15 @@ public class StatisticsViewProjects {
                 }
             }
         }
-        System.out.println(results);
-
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
         for (Project project : projectList.projectList) {
             String projectName = project.getName();
-            System.out.println("projectName = " + projectName);
             Time time = results.get(projectName);
             if (time != null) {
                 pieChartData.add(new PieChart.Data(projectName, time.getTimeInSeconds()));
             }
-
 
         }
         final PieChart chart = new PieChart(pieChartData);
@@ -229,6 +225,5 @@ public class StatisticsViewProjects {
             }
             statisticsArea.setCenter(chart);
         }
-
     }
 }

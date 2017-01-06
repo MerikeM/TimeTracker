@@ -21,9 +21,9 @@ public class EntryView {
 
     BorderPane entryArea = new BorderPane();
 
-    Button selfAddButton;
-    Button changeButton;
-    Button deleteButton;
+    Button selfAddButton = new Button("Lisa");
+    Button changeButton = new Button("Muuda");
+    Button deleteButton = new Button("Kustuta");
 
     TableView<TableData> entryTable;
     ObservableList<TableData> data = FXCollections.observableArrayList();
@@ -31,15 +31,11 @@ public class EntryView {
     public EntryView(ProjectList pl){
         projectList = pl;
 
-        selfAddButton = new Button("Lisa");
-        changeButton = new Button("Muuda");
-        deleteButton = new Button("Kustuta");
-
         readData();
         makeTable();
     }
 
-    //loeb kõik sissekanded ObservableList data'sse
+    //loeb kõik sissekanded ObservaleList'i data
     public void readData(){
         for(Project project: projectList.projectList){
             EntryList entryList = project.entries;
@@ -74,7 +70,7 @@ public class EntryView {
         entryTable.getColumns().addAll(projectColumn, timeColumn, dateColumn);
     }
 
-    //avab sissekannete vaate
+    //tagastab Pane sissekannete vaatega
     public Pane open(){
         VBox buttonsVBox = new VBox();
         buttonsVBox.setPadding(new Insets(10,50,10,10));

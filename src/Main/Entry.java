@@ -9,25 +9,27 @@ import java.util.Date;
 public class Entry {
     SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 
-    private Time time;
-    private Date date;
-    private String projectName;
-    private static int nextID=0;
-    private int entryID;
+    Time time;
+    Date date;
+    String projectName;
+    static int nextID=0;
+    int entryID;
 
+    //konstruktor automaatse ID puhuks
     public Entry(Time t, Date d, String p){
-        this.time = t;
-        this.date = d;
-        this.projectName = p;
-        this.entryID = nextID;
+        time = t;
+        date = d;
+        projectName = p;
+        entryID = nextID;
         nextID++;
     }
 
+    //konstruktor, kui ID on juba olemas
     public Entry(Time t, Date d, String p, int id){
-        this.time = t;
-        this.date = d;
-        this.projectName = p;
-        this.entryID = id;
+        time = t;
+        date = d;
+        projectName = p;
+        entryID = id;
         if (id>=nextID){
             nextID = id+1;
         }
@@ -37,16 +39,18 @@ public class Entry {
         return time;
     }
 
-    public String getDateString() {
-        return df.format(date);
+    //tagastab sissekande aja stringina kujul hh:mm:ss
+    public String getTimeString(){
+        return time.toString();
     }
 
     public Date getDate() {
         return date;
     }
 
-    public String getTimeString(){
-        return time.toString();
+    //tagastab kuupäeva stringina kujul yyyy.MM.dd
+    public String getDateString() {
+        return df.format(date);
     }
 
     public String getProjectName(){
@@ -56,5 +60,4 @@ public class Entry {
     public int getEntryID() {
         return entryID;
     }
-
 }

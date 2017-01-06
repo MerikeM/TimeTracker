@@ -7,11 +7,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-
 
 /**
  * Created by Merike on 23-Dec-16.
@@ -27,6 +24,7 @@ public class StatisticsViewProgress {
         progressArea = new Pane();
     }
 
+    //tagastab Pane progressi statistikaga
     public Pane open(){
         calcStat();
         drawChart();
@@ -34,6 +32,9 @@ public class StatisticsViewProgress {
         return progressArea;
     }
 
+    //arvutab, kui kaua mingil päeval mingi projektiga tegeleti
+    //salvestab tulemuse TreeMap-i result kujul Kuupäev: HashMap
+    //HashMap omakorda on kujul Projekti nimi: aeg
     public void calcStat(){
         SimpleDateFormat simpledatafo = new SimpleDateFormat("yyyy.MM.dd");
         results = new TreeMap();
@@ -69,7 +70,6 @@ public class StatisticsViewProgress {
             }
         }
 
-
         for (Project project:projectList.projectList) {
             String projectName=project.getName();
 
@@ -90,12 +90,10 @@ public class StatisticsViewProgress {
                 c.setTime(testDate);
                 c.add(Calendar.DATE, 1);
                 testDate = c.getTime();
-
             }
         }
-
     }
-
+    //koostab eelnevalt arvutatud andmete põhjal graafiku
     public void drawChart(){
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -122,13 +120,10 @@ public class StatisticsViewProgress {
                    }
                 }
             }
-
             chartData.add(series);
         }
 
         lineChart.setData(chartData);
         progressArea.getChildren().addAll(lineChart);
-
     }
-
 }

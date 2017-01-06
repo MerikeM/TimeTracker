@@ -24,6 +24,7 @@ public class StatisticsView {
         goalsButton = new Button ("Eesmärgid");
     }
 
+    //tagastab Pane statistika vaatega
     public Pane open(){
         VBox statisticsMenu = new VBox(20);
         statisticsMenu.setPadding(new Insets(10,10,10,10));
@@ -38,8 +39,5 @@ public class StatisticsView {
         statisticsArea.setCenter(statisticsViewProjects.open());
 
         return statisticsArea;
-
     }
-
-
 }

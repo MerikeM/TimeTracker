@@ -1,3 +1,5 @@
+//Kasutatud: https://github.com/KristerV/javaSQLNaide/blob/master/src/Andmebaas.java
+
 package Main;
 
 import java.sql.*;

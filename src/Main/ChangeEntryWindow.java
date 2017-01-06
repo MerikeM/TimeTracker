@@ -9,13 +9,11 @@ public class ChangeEntryWindow extends AddEntryWindow {
     TableData tableData;
     EntryView entryView;
 
-
     public ChangeEntryWindow(ProjectList pl, TableData td, EntryView ev){
         super(pl);
         tableData = td;
         entryView = ev;
     }
-
 
     //loob sissekannete muutmise akna
     public void setWindow() {
@@ -34,15 +32,12 @@ public class ChangeEntryWindow extends AddEntryWindow {
         secField.setText(Integer.toString(currentSeconds));
         datePicker.setValue(currentDate);
         projectDropdown.setValue(currentProjectName);
-
     }
 
-        //lisa uus sissekanne ja kustuta vana
-        public void addEntry(){
-            entryView.deleteEntry();
-            super.addEntry();
-
-
+    //lisab uue sissekande ja kustutab vana
+    public void addEntry(){
+        entryView.deleteEntry();
+        super.addEntry();
     }
 
 }

@@ -1,4 +1,4 @@
-//https://github.com/buckyroberts/Source-Code-from-Tutorials/blob/master/JavaFX/005_creatingAlertBoxes/AlertBox.java
+//Kood on pärit: https://github.com/buckyroberts/Source-Code-from-Tutorials/blob/master/JavaFX/005_creatingAlertBoxes/AlertBox.java
 package Main;
 
 import javafx.stage.*;
@@ -7,9 +7,6 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
-/**
- * Created by Merike on 13-Oct-16.
- */
 public class AlertBox {
 
     public static void display(String title, String message) {

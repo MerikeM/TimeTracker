@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -14,29 +13,30 @@ import javafx.stage.Stage;
 public class MainWindow {
     ProjectList projectList;
 
-    EntryView entryView;
-    StatisticsView statisticsView;
-
     Stage window;
     BorderPane pane = new BorderPane();
-    private Scene scene = new Scene(pane, 600, 500);
-
-
+    Scene scene = new Scene(pane, 600, 500);
 
     public MainWindow(ProjectList pl){
         projectList = pl;
-
-        startStage();
-        setUpperMenu();
     }
 
+    //avab mainWindow taimeri vaates
     public void open(){
-        TimerView timerView = new TimerView(projectList);
-        pane.setCenter(timerView.open());
+        startStage();
+        setUpperMenu();
+        openTimerView();
+    }
+
+    //loob stage
+    public void startStage(){
+        window = new Stage();
+        window.setScene(scene);
+        window.show();
     }
 
     //loob ülemise menüüriba
-    private void setUpperMenu() {
+    public void setUpperMenu() {
         Button timerButton = new Button("Taimer");
         Button entryButton = new Button("Lisa/muuda sissekandeid");
         Button statisticsButton = new Button("Statistika");
@@ -45,34 +45,28 @@ public class MainWindow {
         upperMenu.setPadding(new Insets(10,10,10,10));
         upperMenu.getChildren().addAll(timerButton, entryButton, statisticsButton);
 
-        timerButton.setOnAction(event -> pane.setCenter(openTimerView()));
-        entryButton.setOnAction(event -> pane.setCenter(openEntryView()));
-        statisticsButton.setOnAction(event -> pane.setCenter(openStatisticsView()));
+        timerButton.setOnAction(event -> openTimerView());
+        entryButton.setOnAction(event -> openEntryView());
+        statisticsButton.setOnAction(event -> openStatisticsView());
 
         pane.setTop(upperMenu);
     }
 
-    public Pane openTimerView(){
+    //avab taimeri vaate
+    public void openTimerView(){
         TimerView timerView = new TimerView(projectList);
-        return (timerView.open());
+        pane.setCenter(timerView.open());
     }
 
-    public Pane openEntryView(){
+    //avab sissekannete vaate
+    public void openEntryView(){
         EntryView entryView = new EntryView(projectList);
-        return entryView.open();
+        pane.setCenter(entryView.open());
     }
 
-    public Pane openStatisticsView(){
+    //avab statistika vaate
+    public void openStatisticsView(){
         StatisticsView statisticsView = new StatisticsView(projectList);
-        return statisticsView.open();
+        pane.setCenter(statisticsView.open());
     }
-
-
-
-    private void startStage(){
-        window = new Stage();
-        window.setScene(scene);
-        window.show();
-    }
-
 }

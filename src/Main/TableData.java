@@ -7,16 +7,16 @@ import javafx.beans.property.SimpleStringProperty;
  * Created by Merike on 29-Oct-16.
  */
 public class TableData {
-    private SimpleStringProperty project;
-    private SimpleStringProperty date;
-    private SimpleStringProperty time;
-    private SimpleIntegerProperty id;
+    SimpleStringProperty project;
+    SimpleStringProperty date;
+    SimpleStringProperty time;
+    SimpleIntegerProperty id;
 
-    public TableData(String p, String d, String t, int id){
-        this.project = new SimpleStringProperty(p);
-        this.date = new SimpleStringProperty(d);
-        this.time = new SimpleStringProperty(t);
-        this.id = new SimpleIntegerProperty(id);
+    public TableData(String p, String d, String t, int i){
+        project = new SimpleStringProperty(p);
+        date = new SimpleStringProperty(d);
+        time = new SimpleStringProperty(t);
+        id = new SimpleIntegerProperty(i);
     }
 
     public String getProject() {
@@ -35,6 +35,7 @@ public class TableData {
         return id.get();
     }
 
+    //tagastab aja objektina
     public Time getTimeObject(){
         String time = getTime();
         int hmPlace = 0;
@@ -53,7 +54,7 @@ public class TableData {
             }
         }
 
-        //eralda tähtede auskohtade põhjal tunnid, minutid, sekundid ja muuda need int-ideks
+        //eralda koolonite asukohtade põhjal tunnid, minutid, sekundid ja muuda need int-ideks
         hours = Integer.parseInt(time.substring(0,hmPlace));
         min = Integer.parseInt(time.substring(hmPlace + 1, msPlace));
         sec = Integer.parseInt(time.substring(msPlace + 1));

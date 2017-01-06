@@ -2,16 +2,11 @@ package Main;
 
 import java.util.ArrayList;
 
-
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class ProjectList {
-    ArrayList<Project> projectList; //sisaldab kõiki loodud projekte
-
-    public ProjectList(){
-        projectList = new ArrayList<Project>();
-    }
+    ArrayList<Project> projectList = new ArrayList<Project>();
 
     //tagastab kõigi projektide ajad kujul "projekti nimi: aeg"
     public String getTotalTimesAsString(){
@@ -22,10 +17,6 @@ public class ProjectList {
             result = result + s;
         }
         return result;
-    }
-
-    public ArrayList <Project> getProjectList(){
-        return projectList;
     }
 
     //Sisendiks projekte sisaldav ArrayList ja otsitava projekti nimi.
@@ -59,8 +50,14 @@ public class ProjectList {
         return p;
     }
 
+    //lisab uue projekti
     public void add(Project p){
         projectList.add(p);
     }
+
+    public ArrayList <Project> getProjectList(){
+        return projectList;
+    }
+
 
 }

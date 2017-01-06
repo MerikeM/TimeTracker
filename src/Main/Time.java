@@ -4,9 +4,9 @@ package Main;
  * Created by Merike on 08-Oct-16.
  */
 public class Time {
-    private int hours;
-    private int minutes;
-    private int seconds;
+    int hours;
+    int minutes;
+    int seconds;
 
     public Time(int h, int m, int s){
         hours = h;
@@ -44,11 +44,13 @@ public class Time {
         return newTime;
     }
 
+    //tagastab aja sekundites
     public int getTimeInSeconds(){
         int timeInSeconds = seconds + minutes * 60 + hours * 3600;
         return timeInSeconds;
     }
 
+    //tagastab aja tundides
     public double getTimeInHours(){
         double seconds = (double) getTimeInSeconds();
         double hours = seconds / 3600;
@@ -78,7 +80,7 @@ public class Time {
         return time;
     }
 
-    //tagastab aja kujul ..h ..min ..sek
+    //tagastab aja kujul hh:mm:ss
     public String toString(){
         String hoursString;
         String minutesString;
@@ -101,7 +103,5 @@ public class Time {
 
         return(hoursString + ":" + minutesString + ":" + secondsString);
     }
-
-
 
 }

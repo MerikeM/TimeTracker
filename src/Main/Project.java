@@ -5,13 +5,11 @@ package Main;
  */
 public class Project {
     EntryList entries = new EntryList();
-    private Time totalTime;
-    private String name;
+    Time totalTime = new Time (0,0,0);
+    String name;
 
-    public Project(String name){
-        this.name=name;
-        this.entries = new EntryList();
-        this.totalTime = new Time (0,0,0);
+    public Project(String projectName){
+        name = projectName;
     }
 
     //lisab uue sissekande, lisab selle andmebaasi ja arvutab uue koguaja
@@ -31,7 +29,6 @@ public class Project {
         entries.addWithoutDb(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
     }
-
 
     //kustutab sissekande ja arvutab uue koguaja
     public void deleteEntry(Entry entry){
