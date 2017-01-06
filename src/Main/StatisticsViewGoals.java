@@ -18,6 +18,7 @@ public class StatisticsViewGoals {
     Label tenLabel, hundredLabel, thousandLabel, tenThousandLabel;
     HBox projectBox = new HBox();
     ChoiceBox<String> projectChooser = new ChoiceBox<>();
+    Label chooserLabel = new Label ("Vali projekt: ");
     Button okButton = new Button("OK");
     GridPane progressBars;
 
@@ -31,7 +32,7 @@ public class StatisticsViewGoals {
             projectChooser.getItems().addAll(p.getName());
         }
 
-        projectBox.getChildren().addAll(projectChooser, okButton);
+        projectBox.getChildren().addAll(chooserLabel, projectChooser, okButton);
         goalsArea.setTop(projectBox);
 
         okButton.setOnAction(event -> calcStat());
