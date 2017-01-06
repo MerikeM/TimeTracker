@@ -1,8 +1,5 @@
 # Kirjeldus
 Programm võimaldab pidada arvet erinevate ülesannete (projektide) peale kulutatud aja kohta. Aega on võimalik sisestada nii taimeri abil kui ka käsitsi, vajadusel saab sissekandeid muuta või kustutada. Programmis kuvatakse kasutajale ka statistikat: on võimalik võrrelda, kui palju aega on mingile projektile kulutatud, kui palju mingil päeval tööd on tehtud ja kui kaugel ollakse erinevate vahe-eesmärkide (10, 100, 1 000 ja 10 000 tundi) täitumisest. Nende eesmärkide täitumisel avaneb ka aken, mis õnnitleb kasutajat järgmise eesmärgi täitmise puhul.
-## Mõisted
-* Projekt - tegevus, mille üle soovitakse pikema perioodi jooksul arvet pidada
-* Sissekanne - ühekordne projekti kallal töötamiseks kulutatud aeg, seotud konkreetse kestvuse ja kuupäevaga
 # Kasutusjuhend
 Programm jaguneb kolmeks peamiseks osaks:
 * Taimer
