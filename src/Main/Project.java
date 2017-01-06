@@ -1,7 +1,5 @@
 package Main;
 
-import static Main.Main.timerView;
-
 /**
  * Created by Merike on 09-Oct-16.
  */
@@ -21,7 +19,6 @@ public class Project {
         Time oldTotal = totalTime;
         entries.add(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
-        timerView.updateTotalTimes();
         if ((int)totalTime.getTimeInHours()/10>(int)oldTotal.getTimeInHours()/10){
             int border = ((int)totalTime.getTimeInHours()/10)*10;
             String message = "Palju õnne! Projekt " + name + " ületas " + border + " tunni piiri!";
@@ -33,7 +30,6 @@ public class Project {
     public void newEntryWithoutDb(Entry entry){
         entries.addWithoutDb(entry);
         totalTime=Time.addTimes(totalTime,entry.getTime());
-        timerView.updateTotalTimes();
     }
 
 
@@ -41,7 +37,6 @@ public class Project {
     public void deleteEntry(Entry entry){
         totalTime=Time.subtractTimes(totalTime, entry.getTime());
         entries.deleteEntry(entry);
-        timerView.updateTotalTimes();
     }
 
     public Time getTotalTime() {

@@ -2,17 +2,23 @@ package Main;
 
 import java.time.LocalDate;
 
-import static Main.Main.entryView;
-
 /**
  * Created by Merike on 16-Nov-16.
  */
 public class ChangeEntryWindow extends AddEntryWindow {
+    TableData tableData;
+    EntryView entryView;
+
+
+    public ChangeEntryWindow(ProjectList pl, TableData td, EntryView ev){
+        super(pl);
+        tableData = td;
+        entryView = ev;
+    }
+
 
     //loob sissekannete muutmise akna
     public void setWindow() {
-        TableData tableData = entryView.entryTable.getSelectionModel().getSelectedItem();
-
         //leia praeguse sissekande andmed
         String currentProjectName = tableData.getProject();
         Time currentTime = tableData.getTimeObject();
@@ -28,6 +34,7 @@ public class ChangeEntryWindow extends AddEntryWindow {
         secField.setText(Integer.toString(currentSeconds));
         datePicker.setValue(currentDate);
         projectDropdown.setValue(currentProjectName);
+
     }
 
         //lisa uus sissekanne ja kustuta vana

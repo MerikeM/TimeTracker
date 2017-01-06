@@ -4,15 +4,21 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static Main.Main.projectList;
-
 /**
  * Created by Merike on 02-Dec-16.
  */
 public class Database {
+    ProjectList projectList;
+
     Connection conn = null;
 
-    public Database() {
+    public Database (){
+        createConnection();
+        createTable();
+    }
+
+    public Database(ProjectList pl) {
+        projectList = pl;
         createConnection();
         createTable();
     }

@@ -20,12 +20,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 
-import static Main.Main.projectList;
 
 /**
  * Created by Merike on 18-Dec-16.
  */
 public class StatisticsViewProjects {
+    ProjectList projectList;
+
     Label startLabel, endLabel;
     DatePicker startPicker, endPicker;
     Button submitDateButton;
@@ -35,7 +36,9 @@ public class StatisticsViewProjects {
 
     BorderPane statisticsArea;
 
-    public StatisticsViewProjects(){
+    public StatisticsViewProjects(ProjectList pl){
+        projectList = pl;
+
         startLabel = new Label("Algus: ");
         endLabel = new Label("Lõpp: ");
         submitDateButton = new Button("OK");
@@ -159,53 +162,64 @@ public class StatisticsViewProjects {
     }
 
     //näitab statistikat valitud perioodiks
-    public void calcStat(){
+    public void calcStat() {
         LocalDate startLocalDate = startPicker.getValue();
         LocalDate endLocalDate = endPicker.getValue();
         Date startDate = Date.from(startLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date endDate = Date.from(endLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+
         HashMap<String, Time> results = new HashMap();
 
-        for (Project project: projectList.projectList) {
-            for (Entry entry: project.entries.entryList) {
-                if (!startDate.after(entry.getDate()) && !endDate.before(entry.getDate())){
+        for (Project project : projectList.projectList) {
+            for (Entry entry : project.entries.entryList) {
+                if (!startDate.after(entry.getDate()) && !endDate.before(entry.getDate())) {
                     String projectName = entry.getProjectName();
                     Time entryTime = entry.getTime();
-                    if (results.containsKey(projectName)){
+                    if (results.containsKey(projectName)) {
                         Time oldTime = results.get(projectName);
                         Time newTime = Time.addTimes(oldTime, entryTime);
                         results.put(projectName, newTime);
-                    }
-                    else {
+                    } else {
                         results.put(projectName, entryTime);
                     }
                 }
             }
         }
+        System.out.println(results);
 
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        try {
-            for (Project project : projectList.projectList) {
-                String projectName = project.getName();
-                Time time = results.get(projectName);
+
+        for (Project project : projectList.projectList) {
+            String projectName = project.getName();
+            System.out.println("projectName = " + projectName);
+            Time time = results.get(projectName);
+            if (time != null) {
                 pieChartData.add(new PieChart.Data(projectName, time.getTimeInSeconds()));
             }
-            final PieChart chart = new PieChart(pieChartData);
 
-            Label projectLabel = new Label("");
-            Label timeLabel = new Label ("");
-            VBox projectInfo = new VBox();
-            projectInfo.setMinWidth(100);
-            projectInfo.getChildren().addAll(projectLabel, timeLabel);
-            projectInfo.setPadding(new Insets(50,10,10,10));
-            statisticsArea.setLeft(projectInfo);
+
+        }
+        final PieChart chart = new PieChart(pieChartData);
+
+        Label projectLabel = new Label("");
+        Label timeLabel = new Label("");
+        VBox projectInfo = new VBox();
+        projectInfo.setMinWidth(100);
+        projectInfo.getChildren().addAll(projectLabel, timeLabel);
+        projectInfo.setPadding(new Insets(50, 10, 10, 10));
+        statisticsArea.setLeft(projectInfo);
+
+        if (pieChartData.isEmpty()) {
+            Label noEntriesLabel = new Label("Valitud perioodil sissekanded puuduvad");
+            statisticsArea.setCenter(noEntriesLabel);
+        } else {
 
             for (final PieChart.Data data : chart.getData()) {
                 data.getNode().setOnMouseEntered(event -> {
                     projectLabel.setText(data.getName());
-                    Time time = new Time(0,0, (int)data.getPieValue());
+                    Time time = new Time(0, 0, (int) data.getPieValue());
                     timeLabel.setText("Aeg: " + time.toString());
                 });
                 data.getNode().setOnMouseExited(event -> {
@@ -214,11 +228,7 @@ public class StatisticsViewProjects {
                 });
             }
             statisticsArea.setCenter(chart);
-        } catch (NullPointerException e){
-            Label noEntriesLabel = new Label("Valitud perioodil sissekanded puuduvad");
-            statisticsArea.setCenter(noEntriesLabel);
         }
+
     }
-
-
 }

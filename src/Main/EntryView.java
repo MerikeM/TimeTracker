@@ -13,13 +13,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import static Main.Main.projectList;
-
-
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class EntryView {
+    ProjectList projectList;
+
     BorderPane entryArea = new BorderPane();
 
     Button selfAddButton;
@@ -29,12 +28,25 @@ public class EntryView {
     TableView<TableData> entryTable;
     ObservableList<TableData> data = FXCollections.observableArrayList();
 
-    public EntryView(){
+    public EntryView(ProjectList pl){
+        projectList = pl;
+
         selfAddButton = new Button("Lisa");
         changeButton = new Button("Muuda");
         deleteButton = new Button("Kustuta");
 
+        readData();
         makeTable();
+    }
+
+    //loeb kõik sissekanded ObservableList data'sse
+    public void readData(){
+        for(Project project: projectList.projectList){
+            EntryList entryList = project.entries;
+            for(Entry entry: entryList.entryList){
+                data.add(new TableData(entry.getProjectName(), entry.getDateString(), entry.getTimeString(), entry.getEntryID()));
+            }
+        }
     }
 
     //loob sissekannete tabeli
@@ -73,7 +85,7 @@ public class EntryView {
         tablePane.getChildren().addAll(entryTable);
         entryArea.setCenter(tablePane);
 
-        selfAddButton.setOnAction(event -> AddEntryManual());
+        selfAddButton.setOnAction(event -> addEntryManual());
         changeButton.setOnAction(event -> changeEntry());
         deleteButton.setOnAction(event -> deleteEntry());
 
@@ -81,8 +93,8 @@ public class EntryView {
     }
 
     //avab akna sissekannete käsitsi lisamiseks
-    public void AddEntryManual(){
-        AddEntryWindow window = new AddEntryWindow();
+    public void addEntryManual(){
+        AddEntryWindow window = new AddEntryWindow(projectList);
         window.setWindow();
         window.blockParentAndShow();
     }
@@ -92,7 +104,7 @@ public class EntryView {
         if (entryTable.getSelectionModel().isEmpty()){
             AlertBox.display("Viga", "Vali mõni sissekanne");
         } else {
-            ChangeEntryWindow window = new ChangeEntryWindow();
+            ChangeEntryWindow window = new ChangeEntryWindow(projectList, entryTable.getSelectionModel().getSelectedItem(), this);
             window.setWindow();
             window.blockParentAndShow();
         }

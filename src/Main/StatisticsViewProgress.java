@@ -11,16 +11,19 @@ import javafx.scene.layout.Pane;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static Main.Main.projectList;
+
 
 /**
  * Created by Merike on 23-Dec-16.
  */
 public class StatisticsViewProgress {
+    ProjectList projectList;
+
     Pane progressArea;
     TreeMap<String, HashMap> results;
 
-    public StatisticsViewProgress(){
+    public StatisticsViewProgress(ProjectList pl){
+        projectList = pl;
         progressArea = new Pane();
     }
 

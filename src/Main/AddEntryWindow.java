@@ -15,16 +15,22 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import static Main.Main.projectList;
 
 /**
  * Created by Merike on 30-Oct-16.
  */
 public class AddEntryWindow {
+    ProjectList projectList;
+
     ComboBox<String> projectDropdown;
     DatePicker datePicker;
     TextField hourField, minField, secField;
     Stage window;
+    Button okButton;
+
+    public AddEntryWindow (ProjectList pl){
+        projectList = pl;
+    }
 
     public void addEntry(){
         String projectName;
@@ -32,6 +38,8 @@ public class AddEntryWindow {
         Date date = new Date();
         Time time;
         Entry entry;
+
+
 
         projectName = projectDropdown.getValue();
         try {
@@ -115,6 +123,7 @@ public class AddEntryWindow {
 
     //avab sissekannete lisamise akna
     public void setWindow(){
+
         window = new Stage();
         window.setHeight(250);
         window.setWidth(400);
@@ -173,7 +182,7 @@ public class AddEntryWindow {
         datePicker.setValue(LocalDate.now());
 
         //OK ja Tühista nupud
-        Button okButton = new Button("OK");
+        okButton = new Button("OK");
         Button cancelButton = new Button("Tühista");
         HBox buttonsHBox = new HBox();
         buttonsHBox.getChildren().addAll(cancelButton, okButton);
@@ -201,6 +210,8 @@ public class AddEntryWindow {
     public void blockParentAndShow(){
         window.initModality(Modality.APPLICATION_MODAL);
         window.showAndWait();
+
+
     }
 
 

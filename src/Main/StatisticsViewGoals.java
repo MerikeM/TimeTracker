@@ -6,12 +6,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-import static Main.Main.projectList;
 
 /**
  * Created by Merike on 02-Jan-17.
  */
 public class StatisticsViewGoals {
+    ProjectList projectList;
+
     BorderPane goalsArea;
 
     ProgressBar tenBar, hundredBar, thousandBar, tenThousandBar;
@@ -21,7 +22,8 @@ public class StatisticsViewGoals {
     Button okButton;
     GridPane progressBars;
 
-    public StatisticsViewGoals() {
+    public StatisticsViewGoals(ProjectList pl) {
+        projectList = pl;
         goalsArea = new BorderPane();
         projectChooser = new ChoiceBox<>();
         okButton = new Button("OK");

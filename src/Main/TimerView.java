@@ -19,6 +19,8 @@ import java.util.Date;
  * Created by Merike on 12-Nov-16.
  */
 public class TimerView {
+    ProjectList projectList;
+
     BorderPane timerArea = new BorderPane();
 
     Timeline timeline;
@@ -32,19 +34,21 @@ public class TimerView {
     TextField newProjectTextField;
     Button addProjectButton;
 
-    public TimerView(){
+    public TimerView(ProjectList pl){
+        projectList = pl;
+
         startEndButton = new Button("Start");
         stopwatch = new Stopwatch();
         timeLabel = new Label("");
         projectDropDown = new ComboBox<>();
         projectDropDown.setMinWidth(120);
-        for (Project project:Main.projectList.getProjectList()
+        for (Project project:projectList.getProjectList()
              ) {
             String name = project.getName();
             addToDropDown(name);
         }
 
-        totalTimeLabel = new Label(Main.projectList.getTotalTimesAsString());
+        totalTimeLabel = new Label(projectList.getTotalTimesAsString());
         newProjectTextField = new TextField();
         newProjectTextField.setOnKeyPressed(event ->  {
                 if (event.getCode().equals(KeyCode.ENTER))
@@ -54,7 +58,7 @@ public class TimerView {
         addProjectButton = new Button("Lisa uus projekt");
     }
 
-    //avab taimeri vaate
+    //avab täääaimeri vaate
     public Pane open (){
         VBox timerVBox = new VBox(20);
         timerVBox.setPadding(new Insets(10,10,10,10));
@@ -85,7 +89,7 @@ public class TimerView {
     public void startStopwatch(){
         try {
             String currentProjectName = projectDropDown.getValue();
-            Project currentProject = Main.projectList.findProjectByName(currentProjectName);
+            Project currentProject = projectList.findProjectByName(currentProjectName);
         } catch (IllegalArgumentException e){
             AlertBox alertBox = new AlertBox();
             alertBox.display("Viga", "Vali mõni projekt");
@@ -113,7 +117,7 @@ public class TimerView {
         timeline.stop();
 
         String currentProjectName = projectDropDown.getValue();
-        Project currentProject = Main.projectList.findProjectByName(currentProjectName);
+        Project currentProject = projectList.findProjectByName(currentProjectName);
         Entry currentEntry = new Entry(entryTime, new Date(), currentProjectName);
         currentProject.newEntry(currentEntry);
     }
@@ -127,7 +131,7 @@ public class TimerView {
 
     //uuendab projektidele kulutatud aja näitu
     public void updateTotalTimes(){
-        totalTimeLabel.setText(Main.projectList.getTotalTimesAsString());
+        totalTimeLabel.setText(projectList.getTotalTimesAsString());
     }
 
     //lisab uue projekti. Projekti nimi pärineb vastavast TextField-ist
@@ -135,8 +139,8 @@ public class TimerView {
         String projectName=newProjectTextField.getText();
         newProjectTextField.clear();
 
-        for (int i = 0; i < Main.projectList.getProjectList().size(); i++) {
-            Project p = Main.projectList.getProjectList().get(i);
+        for (int i = 0; i < projectList.getProjectList().size(); i++) {
+            Project p = projectList.getProjectList().get(i);
             if (p.getName().equals(projectName)){
                 AlertBox alertBox = new AlertBox();
                 alertBox.display("Viga", "Sellise nimega projekt on olemas");
@@ -145,7 +149,7 @@ public class TimerView {
         }
 
         Project newProject = new Project(projectName);
-        Main.projectList.add(newProject);
+        projectList.add(newProject);
         updateTotalTimes();
     }
 

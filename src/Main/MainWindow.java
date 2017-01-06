@@ -5,17 +5,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import static Main.Main.entryView;
-import static Main.Main.statisticsView;
-import static Main.Main.timerView;
-
 
 /**
  * Created by Merike on 12-Nov-16.
  */
 public class MainWindow {
+    ProjectList projectList;
+
+    EntryView entryView;
+    StatisticsView statisticsView;
 
     Stage window;
     BorderPane pane = new BorderPane();
@@ -23,12 +23,15 @@ public class MainWindow {
 
 
 
-    public MainWindow(){
+    public MainWindow(ProjectList pl){
+        projectList = pl;
+
         startStage();
         setUpperMenu();
     }
 
     public void open(){
+        TimerView timerView = new TimerView(projectList);
         pane.setCenter(timerView.open());
     }
 
@@ -42,12 +45,29 @@ public class MainWindow {
         upperMenu.setPadding(new Insets(10,10,10,10));
         upperMenu.getChildren().addAll(timerButton, entryButton, statisticsButton);
 
-        timerButton.setOnAction(event -> pane.setCenter(timerView.open()));
-        entryButton.setOnAction(event -> pane.setCenter(entryView.open()));
-        statisticsButton.setOnAction(event -> pane.setCenter(statisticsView.open()));
+        timerButton.setOnAction(event -> pane.setCenter(openTimerView()));
+        entryButton.setOnAction(event -> pane.setCenter(openEntryView()));
+        statisticsButton.setOnAction(event -> pane.setCenter(openStatisticsView()));
 
         pane.setTop(upperMenu);
     }
+
+    public Pane openTimerView(){
+        TimerView timerView = new TimerView(projectList);
+        return (timerView.open());
+    }
+
+    public Pane openEntryView(){
+        EntryView entryView = new EntryView(projectList);
+        return entryView.open();
+    }
+
+    public Pane openStatisticsView(){
+        StatisticsView statisticsView = new StatisticsView(projectList);
+        return statisticsView.open();
+    }
+
+
 
     private void startStage(){
         window = new Stage();

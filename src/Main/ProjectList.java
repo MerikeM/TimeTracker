@@ -2,7 +2,6 @@ package Main;
 
 import java.util.ArrayList;
 
-import static Main.Main.timerView;
 
 /**
  * Created by Merike on 12-Nov-16.
@@ -62,7 +61,6 @@ public class ProjectList {
 
     public void add(Project p){
         projectList.add(p);
-        timerView.addToDropDown(p.getName());
     }
 
 }
